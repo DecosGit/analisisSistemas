@@ -1,9 +1,10 @@
 const express = require('express');
 const app = express();
 
+app.use(express.static('./views/styles'));
+app.use('/', require('./router'));
 app.set('view engine', 'ejs');
 
-app.use('/', require('./router'));
 
 // Una vez definidas nuestras rutas podemos iniciar el servidor
 app.listen(5000, err => {
