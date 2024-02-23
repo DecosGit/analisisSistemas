@@ -13,6 +13,14 @@ router.get('/recoveryPassword', (req, res) => {
     res.render('recoveryPassword');
 })
 
+router.post('/login', (req, res) => {
+    res.render('dashboard');
+})
+
+router.get('/dashboard', (req, res) => {
+    res.render('dashboard');
+})
+
 router.post('./validateUser', (req, res) => {
     //Hacemos cualquier validacion y si es correcto devolvemos el dashboard
     console.log('logueado')
