@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const query = require('./database/sqlserver')
 
 router.get('/', (req, res) => {
     res.render('login');
@@ -7,6 +8,11 @@ router.get('/', (req, res) => {
 
 router.get('/createUser', (req, res) => {
     res.render('createUser');
+})
+
+router.get('/db', async (req, res) => {
+    const result = await query.getUsers()
+    res.send(result)
 })
 
 router.get('/recoveryPassword', (req, res) => {
