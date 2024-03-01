@@ -11,4 +11,18 @@ const getUsers = async () => {
     }
 }
 
-module.exports = { getUsers };
+const seekUser = async (datos) => {
+    try {
+        let username = datos.username
+        let password = datos.password
+
+        const pool = await getConection()
+        const result = await pool.query('SELECT id_usuario, password, estado FROM dbo.usuario')
+
+        return result
+    } catch (error) {
+        console.error(error)
+    }
+}
+
+module.exports = { getUsers, seekUser };
