@@ -33,3 +33,32 @@ exports.findUser = async (req, res) => {
 
 }
 
+exports.createUser = async (req, res) => 
+{
+    try 
+    {
+        let cui = req.body.cui
+        let contrasenia = req.body.contrasenia
+        console.log(cui + ' ' + contrasenia);
+
+        const pool = await getConection();
+        const request = pool.request();
+
+        // Ejecutar el procedimiento almacenado
+        const result = await request
+            .input('id_usuario', mssql.NVarChar(50), cui)
+            .input('password', mssql.NVarChar(25), contrasenia)
+            .input('estado', mssql.TinyInt, 1)
+            .input('accion', mssql.Char(1), 'I')
+            .execute('sp_acciones_usuario');
+        
+            res.render('login', { alertMessage: 'Usuario creado exitosamente, tu usuario es: ' + cui});
+
+    } catch (error) 
+    {
+        console.error(error);
+        // Mostrar mensaje de error
+        res.render('createUser', { alertMessage: 'Error interno del servidor al crear tu usuario. Inténtalo de nuevo más tarde.' });
+    }
+
+}
