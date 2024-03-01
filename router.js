@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
 const query = require('./database/sqlserver')
-const Swal = require('sweetalert2');
 
 
 router.get('/', (req, res) => {
@@ -43,32 +42,37 @@ router.post('./validateUser', (req, res) => {
     res.send('Logueado');
 })
 
-router.post('/createUser', (req, res) => {
+router.post('/createUser', async (req, res) => {
+    // Extraer los valores del cuerpo de la solicitud
+    const { cui, contrasenia } = req.body;
+
+        // Llamar a la función registrarUsuario() para realizar el registro del usuario
+        await registrarUsuario();
+
     // Llamada a la función registrarUsuario()
     async function registrarUsuario() {
-        var cui = document.getElementById("uiCui").value;
-        var contrasenia = document.getElementById("uiContrasenia").value;
-    
         try {
             // Ejecutar el procedimiento almacenado
+            const pool = await query.getConection(); // Obtener la conexión a la base de datos
+            const request = pool.request();
+
             const result = await request
                 .input('id_usuario', mssql.NVarChar(50), cui)
                 .input('password', mssql.NVarChar(25), contrasenia)
                 .input('estado', mssql.TinyInt, 1)
                 .input('accion', mssql.Char(1), 'I')
                 .execute('sp_acciones_usuario');
-            
+
             // Mostrar mensaje de éxito
             Swal.fire({
                 icon: 'success',
                 title: 'Éxito',
                 text: 'Usuario registrado correctamente',
             });
-        
+
             // Limpiar formulario
-            document.getElementById("formularioUsuario").reset();
             res.redirect('/dashboard');
-        
+
         } catch (error) {
             console.error(error);
             // Mostrar mensaje de error
@@ -79,8 +83,6 @@ router.post('/createUser', (req, res) => {
             });
         }
     }
-    // Redirigir a otra página después de mostrar el mensaje
-    
 });
 
 module.exports = router;
