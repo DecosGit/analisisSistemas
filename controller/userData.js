@@ -6,6 +6,11 @@ exports.findUser = async (req, res) => {
         let username = req.body.username
         let password = req.body.password
         console.log(username + ' ' + password);
+
+        if(!username){
+            res.render('login')
+        }
+
         const pool = await getConection()
         const result = await pool.query`
             SELECT TOP 1 1
@@ -14,15 +19,17 @@ exports.findUser = async (req, res) => {
 
         if (result.recordset.length > 0) {
             // Si se encontraron datos, renderiza la vista
-            res.render('dashboard', { username: username, data: result.recordset });
+            res.render('dashboard', { username: username, data: result.recordset, alertMessage: 'Bienvenido ' + username });
         } else {
-            // Si no se encontraron datos, puedes enviar alguna respuesta al cliente
-            res.json({ message: 'No se encontraron datos para el usuario.' });
+            // Si no se encontraron datos, envía una alerta y permanece en la misma página
+            res.render('login', { alertMessage: 'Verifica tu nombre de usuario y contraseña' });
         }
 
     } catch (error) {
         console.error(error)
-        res.status(500).json({ error: 'Error interno del servidor' });
+        // Si hay un error, envía una alerta y permanece en la misma página
+        res.render('login', { alertMessage: 'Error interno del servidor. Inténtalo de nuevo más tarde.' });
     }
 
 }
+

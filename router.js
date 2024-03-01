@@ -1,24 +1,15 @@
 const express = require('express');
 const router = express.Router();
-const query = require('./database/sqlserver')
 
-<<<<<<< HEAD
 const userController = require('./controller/userData')
 
 router.post('/login', userController.findUser)
-=======
-
->>>>>>> 747020b80e96f4fca7f7037a24580cffda0a4a7e
 router.get('/', (req, res) => {
-    res.render('login');
+    res.render('login', { alertMessage: null });
 })
 
 router.get('/createUser', (req, res) => {
     res.render('createUser');
-})
-
-router.post('/createUser', async (req, res) => {
-    const result = await query.seekUser(req) 
 })
 
 router.get('/recoveryPassword', (req, res) => {
