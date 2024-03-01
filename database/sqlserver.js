@@ -5,7 +5,7 @@ const getUsers = async () => {
         const pool = await getConection()
         const result = await pool.request().query("select * from dbo.usuario")
         console.log(result.recordset)
-
+        return result
     } catch (error) {
         console.error(error)
     }

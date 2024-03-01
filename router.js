@@ -12,7 +12,10 @@ router.get('/createUser', (req, res) => {
 
 router.get('/db', async (req, res) => {
     const result = await query.getUsers()
-    res.send(result)
+    console.log('Respuesta');
+    console.log(result.recordset);
+    console.log('fin de respuesta');
+    res.send(result.recordset)
 })
 
 router.get('/recoveryPassword', (req, res) => {
