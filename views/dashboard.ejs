@@ -212,7 +212,7 @@
                         </ul>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Salir</a>
+                        <a class="nav-link" href="/">Salir</a>
                     </li>
                 </ul>
             </div>
@@ -259,5 +259,26 @@
     </form>
 
 </body>
+
+    <% if (alertMessage !== null && alertMessage !== undefined) { %>
+        <script>
+            // Utilizar SweetAlert2 para mostrar la alerta
+            const Toast = Swal.mixin({
+            toast: true,
+            position: "top-end",
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+                toast.onmouseenter = Swal.stopTimer;
+                toast.onmouseleave = Swal.resumeTimer;
+            }
+            });
+            Toast.fire({
+            icon: "success",
+            title: '<%= alertMessage %>'
+            });
+        </script>
+    <% } %>
 
 </html>

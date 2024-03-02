@@ -1,10 +1,12 @@
 const express = require('express');
 const app = express();
 
+app.use(express.static(__dirname))
 app.use(express.static('./views/styles'));
-app.use(express.static('./resources/img'));
-app.use('/', require('./router'));
+app.use(express.urlencoded({ extended: false}))
+app.use(express.json())
 app.set('view engine', 'ejs');
+app.use('/', require('./router'));
 
 
 // Una vez definidas nuestras rutas podemos iniciar el servidor
