@@ -1,0 +1,63 @@
+    body {
+        /* Establecer la imagen de fondo */
+        background-image:
+        url(/resources/img/background.jpg); /* Reemplaza 'ruta_de_tu_imagen.jpg' con la ruta de tu imagen */
+        background-size: cover; /* Ajusta el tamaño de la imagen para cubrir toda la pantalla */
+        background-position: center; /* Centra la imagen de fondo */
+        background-repeat: no-repeat;
+        margin: 0; /* Elimina el margen predeterminado */
+        padding-top: 56px; /* Ajusta el espacio superior para que la imagen aparezca debajo de la barra de navegación */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        overflow-x: auto; /* Agregar scroll horizontal */
+        overflow-y: auto; /* Agregar scroll vertical */
+
+    }
+
+    .navbar-brand {
+        font-weight: 700;
+        font-style: normal;
+        color: #333; /* Color del texto gris oscuro */
+    }
+
+    .navbar {
+        background-color: rgba(192, 192, 192, 0.5) !important; /* Color de fondo gris transparente */
+    }
+
+
+
+    .title_nt {
+        position: absolute;
+        top: 20%;  /*Ajusta la posición vertical*/
+        left: 50%;
+        transform: translate(-50%, -50%);
+        color: hsl(0, 0%, 1%); /* Color del texto negro */
+        font-size: 20px; /* Tamaño del texto */
+        font-weight: bold; /* Negrita */
+        text-align: center; /* Alineación centrada */
+        z-index: 1; /* Coloca el texto encima de la imagen */
+        font-family: Arial, sans-serif; /* Cambia la fuente del texto */
+        
+    }
+
+
+    .paragraph {
+        font-size: 12px; /* Tamaño del texto */
+        text-align: justify; /* Alineación centrada */
+    }
+
+    .text_box {
+        position: absolute;
+        top: 50%; /* Ajusta la posición vertical */
+        left: 50%;
+        transform: translate(-50%, -50%);
+        text-align: center; /* Alineación centrada */
+        z-index: 1; /* Coloca el texto encima de la imagen */
+        font-family: Arial, sans-serif; /* Cambia la fuente del texto */
+        background-color: rgba(192, 192, 192, 0.5); /* Color de fondo del botón con transparencia */
+        border: 2px solid #808080; /* Borde de 2px gris */
+        border-radius: 5px;
+        padding: 10px 20px; /* Espaciado interno */
+    }

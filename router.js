@@ -26,4 +26,12 @@ router.get('/', (req, res) => {
     res.render('createUser', { alertMessage: null });
 })
 
+router.get('/noticias', (req, res) => {
+    res.render('noticias');
+})
+
+router.get('/keep_forward', (req, res) => {
+    res.render('keep_forward');
+})
+
 module.exports = router;
