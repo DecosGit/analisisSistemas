@@ -1,182 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
+<html>
 
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Inicio</title>
 
-    <!-- Enlace a Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+        <link rel="stylesheet" href="dashboard.css">
 
-    <!-- Estilos CSS personalizados -->
-    <style>
-        /* Estilo para el cuerpo de la página */
-        body {
-            /* Establecer la imagen de fondo */
-            background-image: url('https://media-public.canva.com/3_llk/MAEayf3_llk/1/s.jpg'); /* Reemplaza 'ruta_de_tu_imagen.jpg' con la ruta de tu imagen */
-            background-size: cover; /* Ajusta el tamaño de la imagen para cubrir toda la pantalla */
-            background-position: center; /* Centra la imagen de fondo */
-            background-repeat: no-repeat;
-            margin: 0; /* Elimina el margen predeterminado */
-            padding-top: 56px; /* Ajusta el espacio superior para que la imagen aparezca debajo de la barra de navegación */
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
 
-        /* Estilo para la imagen */
-        .centered-images {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            position: fixed; /* Fija la posición de las imágenes */
-            bottom: 40px; /* Distancia desde abajo */
-            left: 70%; /* Centra horizontalmente */
-            transform: translateX(-50%); /* Centra horizontalmente */
-            z-index: 1; /* Coloca las imágenes encima de otros elementos */
-        }
-
-        .centered-images .Izwocg {
-            width: 288.585px;
-            height: 191.909px;
-            transform: translate(-9.43981px, -1.42109e-14px) rotate(0deg);
-            margin: 0 10px; /* Espaciado entre las imágenes */
-        }
-
-        .centered-images img {
-            max-width: 100%;
-            max-height: 100%;
-        }
-
-        .navbar-brand {
-            font-weight: 700;
-            font-style: normal;
-            color: #333; /* Color del texto gris oscuro */
-        }
-
-        .navbar {
-            background-color: rgba(192, 192, 192, 0.5) !important; /* Color de fondo gris transparente */
-        }
-
-        /* Estilo para el texto "GESTION DE CONTRATOS" */
-        .title {
-            position: absolute;
-            top: 20%; /* Ajusta la posición vertical */
-            left: 50%;
-            transform: translate(-50%, -50%);
-            color: #030303; /* Color del texto negro */
-            font-size: 36px; /* Tamaño del texto */
-            font-weight: bold; /* Negrita */
-            text-align: center; /* Alineación centrada */
-            z-index: 1; /* Coloca el texto encima de la imagen */
-            font-family: Arial, sans-serif; /* Cambia la fuente del texto */
-            background-color: #808080; /* Color de fondo del botón */
-            border-color: #808080;
-            background-color: rgba(192, 192, 192, 0.5) !important;
-            /*border: 2px solid #808080; /* Borde de 2px gris */
-            padding: 10px 20px; /* Espaciado interno */
-        }
-
-        /* Estilo para el formulario de búsqueda */
-        .search-form {
-            position: absolute;
-            top: 30%; /* Ajusta la posición vertical */
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 1; /* Asegura que esté sobre la imagen */
-            text-align: center; /* Alineación centrada */
-        }
-        .noticias-form {
-            position: absolute;
-            top: 70%; /* Ajusta la posición vertical */
-            left: 25%;
-            transform: translateX(-50%);
-            z-index: 1; /* Asegura que esté sobre la imagen */
-            text-align: center; /* Alineación centrada */
-        }
-        .ayuda-form {
-            position: absolute;
-            top: 80%; /* Ajusta la posición vertical */
-            left: 25%;
-            transform: translateX(-50%);
-            z-index: 1; /* Asegura que esté sobre la imagen */
-            text-align: center; /* Alineación centrada */
-        }
-
-        .search-input {
-            width: 300px; /* Ancho del campo de búsqueda */
-            margin-bottom: 8px; /* Espacio inferior */
-        }
-
-        .search-button {
-            width: 200px; /* Ancho del botón de búsqueda */
-            background-color: #006644; /* Color de fondo del botón */
-            border-color: #006644; /* Color del borde del botón */
-        }
-
-        .noticias-button {
-            width: 200px; /* Ancho del botón de búsqueda */
-            background-color: #006644; /* Color de fondo del botón */
-            border-color: #006644; /* Color del borde del botón */
-        }
-        .ayuda-button {
-            width: 200px; /* Ancho del botón de búsqueda */
-            background-color: #006644; /* Color de fondo del botón */
-            border-color: #006644; /* Color del borde del botón */
-        }
-
-        .search-button:hover {
-            background-color: #00553D; /* Cambia el color de fondo al pasar el mouse */
-            border-color: #00553D; /* Cambia el color del borde al pasar el mouse */
-        }
-        .text-after-image1 {
-            position: absolute;
-            top: 78%; /* Ajusta la posición vertical */
-            left: 10%;
-            transform: translate(-50%, -50%);
-            color: #030303; /* Color del texto negro */
-            font-size: 20px; /* Tamaño del texto */
-            /*font-weight: bold; /* Negrita */
-            text-align: center; /* Alineación centrada */
-            z-index: 1; /* Coloca el texto encima de la imagen */
-            font-family: Arial, sans-serif; /* Cambia la fuente del texto */
-            padding: 10px 20px; /* Espaciado interno */
-        }
-        .text-after-image2 {
-            position: absolute;
-            top: 78%; /* Ajusta la posición vertical */
-            left: 44%;
-            transform: translate(-50%, -50%);
-            color: #030303; /* Color del texto negro */
-            font-size: 20px; /* Tamaño del texto */
-            /*font-weight: bold; /* Negrita */
-            text-align: center; /* Alineación centrada */
-            z-index: 1; /* Coloca el texto encima de la imagen */
-            font-family: Arial, sans-serif; /* Cambia la fuente del texto */
-            padding: 10px 20px; /* Espaciado interno */
-        }
-        .text-after-image3 {
-            position: absolute;
-            top: 78%; /* Ajusta la posición vertical */
-            left: 78%;
-            transform: translate(-50%, -50%);
-            color: #030303; /* Color del texto negro */
-            font-size: 20px; /* Tamaño del texto */
-            /*font-weight: bold; /* Negrita */
-            text-align: center; /* Alineación centrada */
-            z-index: 1; /* Coloca el texto encima de la imagen */
-            font-family: Arial, sans-serif; /* Cambia la fuente del texto */
-            padding: 10px 20px; /* Espaciado interno */
-        }
-    </style>
-
-    <!-- Enlace a Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 
 <body>
+<<<<<<< HEAD
     <!-- Barra de navegación -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
         <div class="container-fluid">
@@ -207,46 +49,123 @@
             <% } %>
         </div>
     </nav>
+=======
+
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="/dashboard">INICIO</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                    aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent"> 
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-auto"> 
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="#">EMPLEOS</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">MI PERFIL</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">PROCESOS</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                Dropdown
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item" href="#">Action</a></li>
+                                <li><a class="dropdown-item" href="#">Another action</a></li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li><a class="dropdown-item" href="#">Something else here</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Salir</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+    </header>
+    <main>
+     
+    
+>>>>>>> 0f57d407146252cbb9f6053a94b98e5c594349da
 
     <!-- Texto "GESTION DE CONTRATOS" centrado sobre la imagen -->
-    <div class="title">
+    <div class="titled">
         GESTION DE CONTRATOS
     </div>
 
     <!-- Imágenes centradas en la parte inferior -->
-    <div class="centered-images">
-        <div class="Izwocg">
-            <img class="_7_i_XA" crossorigin="anonymous" src="https://media-public.canva.com/uH3MI/MAEvH7uH3MI/1/t.jpg" draggable="false" style="object-fit: fill;">
+    
+    <div class="element-container">   
+        <div style="display: flex; flex-wrap: wrap; flex-direction: row;">
+            <div style="margin-right: 30px;">
+                <div style="border: 3px solid #fff;">
+                    <div style="border-radius: 10px;">
+                        <a href="/stories" style="text-decoration: none; color: inherit;">
+                        <img src="images/Hand.jpg" alt="Testing " style="width: 200px;">
+            </div>
+            </div>
+                <h5>  Historias de Éxito  </h5></a>
+            </div><a href="/keep_forward" style="text-decoration: none; color: inherit;">
+            <div style="margin-right: 30px;">
+                <div style="border: 3px solid #fff;">
+                    <div style="border-radius: 10px;">
+                <img src="images/Hands.jpg" style="width: 220px;">
+            </div>
+            </div>
+                <h5>Seguimos Avanzando</h5></a>
+            </div>
+            
+                <div style="margin-right: 30px;">
+                    <div style="border: 3px solid #fff;">
+                    <div style="border-radius: 10px;">    
+                <img src="images/Bag.jpg" style="width: 200px;">
+            </div>
+            </div>
+                <h5>Bolsa de Empleo</h5>
+            </div>
+            </div>
         </div>
-        <div class="text-after-image1">
-            Historias de Exito
-        </div>
-        <div class="Izwocg">
-            <img class="_7_i_XA" crossorigin="anonymous" src="https://media-public.canva.com/LgXwM/MAEld_LgXwM/1/t.jpg" draggable="false" style="object-fit: fill;">
-        </div>
-        <div class="text-after-image2">
-            Seguimos Avanzando
-        </div>
-        <div class="Izwocg">
-            <img class="_7_i_XA" crossorigin="anonymous" src="https://media-public.canva.com/2DLQA/MAEixJ2DLQA/1/t.jpg" draggable="false" style="object-fit: fill;">
-        </div>
-        <div class="text-after-image3">
-            Bolsa de Empleo
-        </div>
-    </div>
-
+    
+    
     <!-- Formulario de búsqueda -->
     <form class="d-flex flex-column align-items-center search-form">
+        
         <input class="form-control me-2 search-input" type="search" placeholder="Buscar" aria-label="Buscar">
+        <div style="margin-top: 10px;">
         <button class="btn btn-success search-button" type="submit">Buscar</button>
+        </div>
     </form>
-    <form class="d-flex flex-column align-items-center noticias-form">
-        <button class="btn btn-success noticias-button" type="submit">Noticias</button>
-    </form>
+    
+    <div class="d-flex flex-column align-items-center noticias-form">
+        <button class="btn btn-success noticias-button" onclick="redirectToNoticias()">Noticias</button>
+    </div>
+    
+    <script>
+        function redirectToNoticias() {
+            window.location.href = "/noticias"; // Redirige a la página de noticias
+        }
+    </script>
+    
     <form class="d-flex flex-column align-items-center ayuda-form">
         <button class="btn btn-success noticias-button" type="submit">Ayuda</button>
     </form>
 
+    </main>
+    <footer>
+    
+    </footer>
+    
 </body>
 
     <% if (alertMessage !== null && alertMessage !== undefined) { %>

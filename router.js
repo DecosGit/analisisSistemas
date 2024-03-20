@@ -32,4 +32,12 @@ router.post('/crearEmpleo', empleoController.createJob)
 
 router.get('/empleo', empleoController.findEmpleos)
 
+router.get('/noticias', (req, res) => {
+    res.render('noticias');
+})
+
+router.get('/keep_forward', (req, res) => {
+    res.render('keep_forward');
+})
+
 module.exports = router;
