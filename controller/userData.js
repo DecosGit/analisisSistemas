@@ -1,31 +1,27 @@
-const { getConection } = require('../database/conexionSQLServer')
-const mssql = require('mssql');
+// const { getConection } = require('../database/conexionSQLServer')
+const bd = require('../database/conexionSQL')
 
-exports.findUser = async (req, res) => {
+exports.findUser = (req, res) => {
 
     try {
         let username = req.body.username
         let password = req.body.password
         console.log(username + ' ' + password);
+        const conexion = bd();
+        conexion.query('SELECT * FROM usuarios WHERE estado = 1 AND dpi = ? AND contrasena = ?', [username, password], (error, results) => {
+            if (error) {
+                console.error('Error al ejecutar la consulta:', error);
+                return res.render('login', { alertMessage: 'Error al ejecutar la consulta' });
+            }
 
-        if(!username){
-            res.render('login')
-        }
-
-        const pool = await getConection()
-        const result = await pool.query`
-            SELECT TOP 1 1
-            FROM dbo.usuario
-            WHERE id_usuario = ${username} AND password = ${password} AND estado = 1`;
-
-        if (result.recordset.length > 0) {
-            // Si se encontraron datos, renderiza la vista
-            res.render('dashboard', { username: username, data: result.recordset, alertMessage: 'Bienvenido ' + username });
-        } else {
-            // Si no se encontraron datos, envía una alerta y permanece en la misma página
-            res.render('login', { alertMessage: 'Verifica tu nombre de usuario y contraseña' });
-        }
-
+            if (results.length > 0) {
+                // Si se encontraron datos, renderizar el dashboard con los datos del usuario
+                return res.render('dashboard', { data: results, username: username, alertMessage: 'Bienvenido ' + username });
+            } else {
+                // Si no se encontraron datos, renderizar la página de login con un mensaje de error
+                return res.render('login', { alertMessage: 'Usuario no encontrado' });
+            }
+        });
     } catch (error) {
         console.error(error)
         // Si hay un error, envía una alerta y permanece en la misma página
@@ -34,64 +30,48 @@ exports.findUser = async (req, res) => {
 
 }
 
-exports.createUser = async (req, res) => 
-{
-    try 
-    {
-        let correo = req.body.correo
+exports.createUser = (req, res) => {
+    try {
+
+        let nombres = req.body.primerNombre + ' ' + req.body.segundoNombre + ' ' + req.body.tercerNombre
+        let apellidos = req.body.primerApellido + ' ' + req.body.segundoApellido + ' ' + req.body.apellidoCasada
         let cui = req.body.cui
-        let contrasenia = req.body.contrasenia
-        let primerNombre = req.body.primerNombre
-        let segundoNombre = req.body.segundoNombre || ""
-        let otrosNombres = req.body.tercerNombre || ""
-        let primerApellido = req.body.primerApellido
-        let segundoApellido = req.body.segundoApellido || ""
-        let apellidoCasada = req.body.apellidoCasada || ""
+        let correo = req.body.correo
+        let password1 = req.body.contrasenia
+        let password2 = req.body.confirmacionContrasenia
+        let fecha = Date.now()
+        let estado = '1'
+        let rol = 'Basic'
 
-        let nombreCompleto = `${primerNombre} ${segundoNombre} ${otrosNombres} ${primerApellido} ${segundoApellido}`
-
-        if (apellidoCasada) 
-        {
-            nombreCompleto += ` de ${apellidoCasada}`
+        if(password1 != password2){
+            throw new Error('La Password no coincide');
         }
-        // Eliminar espacios adicionales
-        nombreCompleto = nombreCompleto.replace(/\s+/g, ' ').trim()
-        
-        let hoy = new Date()
-        let dia = hoy.getDate()
-        let mes = hoy.getMonth() + 1 // Los meses van de 0 a 11, por eso se suma 1
-        let anio = hoy.getFullYear()
-        let fechaCorta = `${dia}/${mes}/${anio}`
-         
-        const pool = await getConection();
-        const request = pool.request();
 
-        // Ejecutar el procedimiento almacenado
-        const result = await request
-            .input('id_usuario', mssql.NVarChar(50), cui)
-            .input('password', mssql.NVarChar(25), contrasenia)
-            .input('estado', mssql.TinyInt, 1)
-            .input('accion', mssql.Char(1), 'I')
-            .input('nombre_reporte', mssql.VarChar(100), nombreCompleto)
-            .input('email', mssql.VarChar(100), correo)
-            .input('usuario_ing', mssql.VarChar(50), 'admin')
-            .input('fecha_ing', mssql.SmallDateTime, fechaCorta)
-            .input('usuario_act', mssql.VarChar, null)
-            .input('fecha_act', mssql.SmallDateTime, null)
-            .input('nombre_completo', mssql.VarChar(mssql.MAX), nombreCompleto)
-            .input('cod_unidad', mssql.VarChar(6), null)
-            .input('cod_puesto', mssql.SmallInt, null)
-            .input('cod_rol_usuario', mssql.VarChar(10), 'contr')
-            .input('cui', mssql.VarChar(15), cui)
-            .execute('sp_acciones_usuario');
+        // Construir la consulta de inserción
+        const insercion = 'INSERT INTO usuarios (id, nombre, apellido, dpi, correo_electronico, contrasena, fecha_creacion, estado, rol) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)';
+        const valores = [null, nombres, apellidos, cui, correo, password1, fecha, estado, rol]; // Reemplaza valor1, valor2, valor3 con los valores que deseas insertar
+        const conexion = bd();
+        conexion.query(insercion, valores, (error, results) => {
+            if (error) {
+                console.error('Error al insertar en la base de datos:', error);
+                return res.status(500).json({ error: 'Error al insertar en la base de datos' });
+            }
         
-            res.render('login', { alertMessage: 'Tu usuario es: ' + cui});
-
-    } catch (error) 
-    {
-        console.error(error);
-        // Mostrar mensaje de error
-        res.render('createUser', { alertMessage: 'Error interno del servidor al crear tu usuario. Inténtalo de nuevo más tarde.' });
+            // Verificar si se insertó correctamente
+            if (results.affectedRows > 0) {
+                // Si se insertó al menos una fila, significa que se insertó correctamente
+                console.log('Inserción exitosa');
+                return res.render('login', { alertMessage: 'Creacion de usuario Exitoso ' + cui})
+            } else {
+                // Si no se insertó ninguna fila, significa que no se pudo insertar
+                console.log('No se pudo insertar');
+                return res.render('createUser', { alertMessage: 'No se pudo crear usuario'})
+            }
+        });
+    } catch (error) {
+        console.error(error)
+        // Si hay un error, envía una alerta y permanece en la misma página
+        res.render('login', { alertMessage: 'Error interno del servidor. Inténtalo de nuevo más tarde.' });
     }
-
 }
+

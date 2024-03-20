@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Inicio</title>
+
+    <!-- Enlace a Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Estilos CSS personalizados -->
+    <style>
+        /* Estilo para el cuerpo de la página */
+        body {
+            /* Establecer la imagen de fondo */
+            background-image: url('https://media-public.canva.com/3_llk/MAEayf3_llk/1/s.jpg');
+            /* Reemplaza 'ruta_de_tu_imagen.jpg' con la ruta de tu imagen */
+            background-size: cover;
+            /* Ajusta el tamaño de la imagen para cubrir toda la pantalla */
+            background-position: center;
+            /* Centra la imagen de fondo */
+            background-repeat: no-repeat;
+            margin: 0;
+            /* Elimina el margen predeterminado */
+            padding-top: 56px;
+            /* Ajusta el espacio superior para que la imagen aparezca debajo de la barra de navegación */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        /* Estilo para la imagen */
+        .centered-images {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: fixed;
+            /* Fija la posición de las imágenes */
+            bottom: 40px;
+            /* Distancia desde abajo */
+            left: 70%;
+            /* Centra horizontalmente */
+            transform: translateX(-50%);
+            /* Centra horizontalmente */
+            z-index: 1;
+            /* Coloca las imágenes encima de otros elementos */
+        }
+
+        .centered-images .Izwocg {
+            width: 288.585px;
+            height: 191.909px;
+            transform: translate(-9.43981px, -1.42109e-14px) rotate(0deg);
+            margin: 0 10px;
+            /* Espaciado entre las imágenes */
+        }
+
+        .centered-images img {
+            max-width: 100%;
+            max-height: 100%;
+        }
+
+        .navbar-brand {
+            font-weight: 700;
+            font-style: normal;
+            color: #333;
+            /* Color del texto gris oscuro */
+        }
+
+        .navbar {
+            background-color: rgba(192, 192, 192, 0.5) !important;
+            /* Color de fondo gris transparente */
+        }
+
+        /* Estilo para el texto "GESTION DE CONTRATOS" */
+        .title {
+            position: absolute;
+            top: 20%;
+            /* Ajusta la posición vertical */
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #030303;
+            /* Color del texto negro */
+            font-size: 36px;
+            /* Tamaño del texto */
+            font-weight: bold;
+            /* Negrita */
+            text-align: center;
+            /* Alineación centrada */
+            z-index: 1;
+            /* Coloca el texto encima de la imagen */
+            font-family: Arial, sans-serif;
+            /* Cambia la fuente del texto */
+            background-color: #808080;
+            /* Color de fondo del botón */
+            border-color: #808080;
+            background-color: rgba(192, 192, 192, 0.5) !important;
+            /*border: 2px solid #808080; /* Borde de 2px gris */
+            padding: 10px 20px;
+            /* Espaciado interno */
+        }
+
+        /* Estilo para el formulario de búsqueda */
+        .search-form {
+            position: absolute;
+            top: 30%;
+            /* Ajusta la posición vertical */
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1;
+            /* Asegura que esté sobre la imagen */
+            text-align: center;
+            /* Alineación centrada */
+        }
+
+        .noticias-form {
+            position: absolute;
+            top: 70%;
+            /* Ajusta la posición vertical */
+            left: 25%;
+            transform: translateX(-50%);
+            z-index: 1;
+            /* Asegura que esté sobre la imagen */
+            text-align: center;
+            /* Alineación centrada */
+        }
+
+        .ayuda-form {
+            position: absolute;
+            top: 80%;
+            /* Ajusta la posición vertical */
+            left: 25%;
+            transform: translateX(-50%);
+            z-index: 1;
+            /* Asegura que esté sobre la imagen */
+            text-align: center;
+            /* Alineación centrada */
+        }
+
+        .search-input {
+            width: 300px;
+            /* Ancho del campo de búsqueda */
+            margin-bottom: 8px;
+            /* Espacio inferior */
+        }
+
+        .search-button {
+            width: 200px;
+            /* Ancho del botón de búsqueda */
+            background-color: #006644;
+            /* Color de fondo del botón */
+            border-color: #006644;
+            /* Color del borde del botón */
+        }
+
+        .noticias-button {
+            width: 200px;
+            /* Ancho del botón de búsqueda */
+            background-color: #006644;
+            /* Color de fondo del botón */
+            border-color: #006644;
+            /* Color del borde del botón */
+        }
+
+        .ayuda-button {
+            width: 200px;
+            /* Ancho del botón de búsqueda */
+            background-color: #006644;
+            /* Color de fondo del botón */
+            border-color: #006644;
+            /* Color del borde del botón */
+        }
+
+        .search-button:hover {
+            background-color: #00553D;
+            /* Cambia el color de fondo al pasar el mouse */
+            border-color: #00553D;
+            /* Cambia el color del borde al pasar el mouse */
+        }
+
+        .text-after-image1 {
+            position: absolute;
+            top: 78%;
+            /* Ajusta la posición vertical */
+            left: 10%;
+            transform: translate(-50%, -50%);
+            color: #030303;
+            /* Color del texto negro */
+            font-size: 20px;
+            /* Tamaño del texto */
+            /*font-weight: bold; /* Negrita */
+            text-align: center;
+            /* Alineación centrada */
+            z-index: 1;
+            /* Coloca el texto encima de la imagen */
+            font-family: Arial, sans-serif;
+            /* Cambia la fuente del texto */
+            padding: 10px 20px;
+            /* Espaciado interno */
+        }
+
+        .text-after-image2 {
+            position: absolute;
+            top: 78%;
+            /* Ajusta la posición vertical */
+            left: 44%;
+            transform: translate(-50%, -50%);
+            color: #030303;
+            /* Color del texto negro */
+            font-size: 20px;
+            /* Tamaño del texto */
+            /*font-weight: bold; /* Negrita */
+            text-align: center;
+            /* Alineación centrada */
+            z-index: 1;
+            /* Coloca el texto encima de la imagen */
+            font-family: Arial, sans-serif;
+            /* Cambia la fuente del texto */
+            padding: 10px 20px;
+            /* Espaciado interno */
+        }
+
+        .text-after-image3 {
+            position: absolute;
+            top: 78%;
+            /* Ajusta la posición vertical */
+            left: 78%;
+            transform: translate(-50%, -50%);
+            color: #030303;
+            /* Color del texto negro */
+            font-size: 20px;
+            /* Tamaño del texto */
+            /*font-weight: bold; /* Negrita */
+            text-align: center;
+            /* Alineación centrada */
+            z-index: 1;
+            /* Coloca el texto encima de la imagen */
+            font-family: Arial, sans-serif;
+            /* Cambia la fuente del texto */
+            padding: 10px 20px;
+            /* Espaciado interno */
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        .card {
+            max-height: 250px;
+            overflow-y: auto;
+            /* Agrega una barra de desplazamiento vertical si es necesario */
+        }
+
+        .card::-webkit-scrollbar {
+            width: 0;
+            /* Ancho cero para ocultar la barra de desplazamiento */
+        }
+    </style>
+
+    <!-- Enlace a Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+
+<body>
+    <!-- Barra de navegación -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/dashboard">INICIO</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#">EMPLEOS</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">MI PERFIL</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">PROCESOS</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">Salir</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <section class="container-fluid d-grid gap-3">
+        <section class="container-fluid">
+            <h3>Configuraciones</h3>
+            <div class="btn-group" role="group" aria-label="Basic outlined example">
+                <a href="/crearEmpleo" class="btn btn-outline-primary">Crear</a>
+                <a class="btn btn-outline-primary">Editar</a>
+                <a class="btn btn-outline-primary">Eliminar</a>
+            </div>
+        </section>
+
+        <section class="container-fluid">
+            <% if(data){ %>
+                <div class="row">
+                    <% data.forEach(function(item) { let fecha=new Date(item.fecha_vencimiento); %>
+                        <div class="col-lg-2 col-md-3 col-sm-4 col-6 mb-3">
+                            <div class="card text-dark bg-info">
+                                <div class="card-header">
+                                    <%= item.nombre %>
+                                </div>
+                                <div class="card-body">
+                                    <h5 class="card-title">Salario: <%= item.sueldo %>
+                                    </h5>
+                                    <p class="card-text">Descripción: <%= item.descripcion %>
+                                    </p>
+                                    <p class="card-text">Fecha de vencimiento: <%= fecha.getDate() %>/<%=
+                                                fecha.getMonth() + 1 %>/<%= fecha.getFullYear() %>
+                                    </p>
+                                </div>
+                                <div
+                                    class="card-footer bg-transparent border-success d-flex justify-content-center align-items-center">
+                                    <button class="btn btn-outline-success">Aplicar</button>
+                                </div>
+                            </div>
+                        </div>
+                        <% }); %>
+                </div>
+                <% } else { %>
+                    <p>No se encontraron datos.</p>
+                    <% } %>
+        </section>
+    </section>
+
+
+</body>
+
+</html>
