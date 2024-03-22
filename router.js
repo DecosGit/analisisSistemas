@@ -17,6 +17,9 @@ router.get('/recoveryPassword', (req, res) => {
     res.render('recoveryPassword');
 })
 
+router.get('/adminUsuarios', (req, res) => {
+    res.render('adminUsuarios');
+})
 
 router.get('/dashboard', (req, res) => {
     res.render('dashboard', { alertMessage: null, username: null});
