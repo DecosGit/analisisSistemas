@@ -35,6 +35,8 @@ router.get('/crearEmpleo', (req, res) => {
 
 router.post('/createUser', userController.createUser)
 
+router.post('/createUserAdmin', userController.createUserAdmin)
+
 router.post('/crearEmpleo', empleoController.createJob)
 
 router.get('/empleo', empleoController.findEmpleos)

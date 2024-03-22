@@ -13,7 +13,7 @@
 
 <body>
     <div class="container">
-        <form form id="formularioUsuario" method="post" action="/createUser" onsubmit="return validaciones()">
+        <form form id="formularioUsuario" method="post" action="/createUserAdmin" onsubmit="return validaciones()">
             <div class="row">
                 <h2 class="text-center">Creación de nuevo usuario:</h2>
             </div>
@@ -137,17 +137,16 @@
         }
 
         function validarRol() {
-    var rolSeleccionado = document.getElementById("uiRol").value;
-    if (rolSeleccionado !== "Admin" && rolSeleccionado !== "Basic") {
-        Swal.fire({
-            icon: 'error',
-            title: 'Oops...',
-            text: 'Seleccione un rol válido.'
-        });
-        // Puedes agregar más validaciones o acciones aquí si es necesario
-    }
+            var rolSeleccionado = document.getElementById("uiRol").value;
+            if (rolSeleccionado !== "Admin" && rolSeleccionado !== "Basic") {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Seleccione un rol válido.'
+                });
+            }
     
-}
+        }
 
 
     </script>
