@@ -120,3 +120,45 @@ exports.createUserAdmin = (req, res) => {
     }
 }
 
+exports.getUsuarios = (req, res) => {
+    try {
+        const conexion = bd();
+        conexion.query('SELECT * FROM usuarios WHERE estado = 1', (error, results) => {
+            if (error) {
+                console.error('Error al ejecutar la consulta:', error);
+                return res.render('adminUsuarios', { alertMessage: 'Error al ejecutar la consulta' });
+            }
+
+            if (results.length > 0) {
+                // Si se encontraron datos, renderizar el dashboard con los datos del usuario
+                return res.render('adminUsuarios', { usuarios: results });
+            } else {
+                // Si no se encontraron datos, renderizar la página de login con un mensaje de error
+                return res.render('adminUsuarios', { alertMessage: 'No existen usuarios para administrar' });
+            }
+        });
+    } catch (error) {
+        console.error(error)
+        // Si hay un error, envía una alerta y permanece en la misma página
+        res.render('adminUsuarios', { alertMessage: 'Error interno del servidor. Inténtalo de nuevo más tarde.' });
+    }
+}
+
+exports.deleteUsuario = (req, res) => {
+    try {
+        const userId = req.body.userId
+        const conexion = bd();
+        conexion.query('UPDATE usuarios SET estado = 0 WHERE id = ?', [userId], (error, results) => {
+            if (error) {
+                console.error('Error al ejecutar la consulta:', error);
+                return res.render('adminUsuarios', { alertMessage: 'Error al ejecutar la consulta' });
+            }
+            // Redirigir a la página de administración de usuarios después de eliminar el usuario
+            res.redirect('/adminUsuarios');
+        });
+    } catch (error) {
+        console.error(error)
+        res.render('adminUsuarios', { alertMessage: 'Error interno del servidor. Inténtalo de nuevo más tarde.' });
+    }
+}
+

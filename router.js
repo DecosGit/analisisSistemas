@@ -17,9 +17,7 @@ router.get('/recoveryPassword', (req, res) => {
     res.render('recoveryPassword');
 })
 
-router.get('/adminUsuarios', (req, res) => {
-    res.render('adminUsuarios');
-})
+router.get('/adminUsuarios', userController.getUsuarios);
 
 router.get('/createUserAdmin', (req, res) => {
     res.render('createUserAdmin');
@@ -36,6 +34,8 @@ router.get('/crearEmpleo', (req, res) => {
 router.post('/createUser', userController.createUser)
 
 router.post('/createUserAdmin', userController.createUserAdmin)
+
+router.post('/deleteUsuario/:id', userController.deleteUsuario)
 
 router.post('/crearEmpleo', empleoController.createJob)
 
