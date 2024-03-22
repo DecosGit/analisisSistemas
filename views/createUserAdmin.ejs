@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Creación de usuarios</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="stylesheet" href="createUser.css">
+</head>
+
+<body>
+    <div class="container">
+        <form form id="formularioUsuario" method="post" action="/createUser" onsubmit="return validaciones()">
+            <div class="row">
+                <h2 class="text-center">Creación de nuevo usuario:</h2>
+            </div>
+            <br>
+            <div class="row">
+                <label for="uiLabelNombreCompleto" class="form-label text-center">Nombre completo:</label>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <input type="text" class="form-control" id="uiPrimerNombre" name="primerNombre"
+                        placeholder="Primer nombre" required>
+                </div>
+                <div class="col-md-4">
+                    <input type="text" class="form-control" id="uiSegundoNombre" name="segundoNombre"
+                        placeholder="Segundo nombre">
+                </div>
+                <div class="col-md-4">
+                    <input type="text" class="form-control" id="uiTercerNombre" name="tercerNombre"
+                        placeholder="Otros nombres">
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-md-4">
+                    <input type="text" class="form-control" id="uiPrimerApellido" name="primerApellido"
+                        placeholder="Primer apellido" required>
+                </div>
+                <div class="col-md-4">
+                    <input type="text" class="form-control" id="uiSegundoApellido" name="segundoApellido"
+                        placeholder="Segundo apellido">
+                </div>
+                <div class="col-md-4">
+                    <input type="text" class="form-control" id="uiApellidoCasada" name="apellidoCasada"
+                        placeholder="Apellido de casada">
+                </div>
+            </div>
+            <br>
+            <div class="row justify-content-center">
+                <div class="col-sm-6">
+                    <label for="uiLabelCui" class="form-label text-center">Ingrese su CUI:</label>
+                    <input type="number" class="form-control text-center" id="uiCui" name="cui" onchange="validarCui()"
+                        placeholder="xxxxxxxxxxxxx" required>
+                </div>
+                <div class="col-sm-6">
+                    <label for="uiLabelCorreo" class="form-label text-center">Ingrese su correo electrónico:</label>
+                    <input type="email" class="form-control text-center" id="uiCorreoElectronico" name="correo"
+                        placeholder="ejemplo@gmail.com" required>
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <label for="uiLabelContrasenia" class="form-label text-center">Establecer contraseña:</label>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <input type="password" class="form-control" id="uiContrasenia" name="contrasenia"
+                        placeholder="Ingrese su contraseña" required>
+                </div>
+                <div class="col-md-6">
+                    <input type="password" class="form-control" id="uiConfirmacionContrasenia"
+                        name="confirmacionContrasenia" placeholder="Confirme su contraseña" required>
+                </div>
+            </div>
+            <br>
+            <div class="row justify-content-center">
+                <div class="col-sm-6">
+                    <label for="uiLabelRol" class="form-label text-center">Seleccione el rol:</label>
+                    <select class="form-select text-center" id="uiRol" name="rol" onchange="validarRol()" required>
+                        <option value="-">-</option>
+                        <option value="Admin">Admin</option>
+                        <option value="Basic">Basic</option>
+                    </select>
+                </div>
+            </div>
+            <br>
+            <div class="row justify-content-center">
+                <div class="col-sm-5">
+                    <button type="submit" class="form-control btn btn-outline-primary">Registrar usuario</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        function validaciones() {
+            var contraseniasValidas = validarContrasenias();
+            var cuiValido = validarCui();
+
+            if (!contraseniasValidas || !cuiValido) {
+                return false;
+            }
+            return true;
+        }
+
+        function validarContrasenias() {
+            var contrasenia = document.getElementById("uiContrasenia").value;
+            var confirmacionContrasenia = document.getElementById("uiConfirmacionContrasenia").value;
+
+            if (contrasenia !== confirmacionContrasenia) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Las contraseñas no coinciden',
+                });
+                return false;
+            }
+            return true;
+        }
+
+        function validarCui() {
+            let texto = document.getElementById("uiCui").value;
+            if (texto.length !== 13) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Debes ingresar 13 dígitos para el CUI',
+                });
+                return false;
+            }
+            return true;
+        }
+
+        function validarRol() {
+    var rolSeleccionado = document.getElementById("uiRol").value;
+    if (rolSeleccionado !== "Admin" && rolSeleccionado !== "Basic") {
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Seleccione un rol válido.'
+        });
+        // Puedes agregar más validaciones o acciones aquí si es necesario
+    }
+    
+}
+
+
+    </script>
+
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+                integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+                crossorigin="anonymous">
+            </script>
+</body>
+
+</html>

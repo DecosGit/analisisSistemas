@@ -21,6 +21,10 @@ router.get('/adminUsuarios', (req, res) => {
     res.render('adminUsuarios');
 })
 
+router.get('/createUserAdmin', (req, res) => {
+    res.render('createUserAdmin');
+})
+
 router.get('/dashboard', (req, res) => {
     res.render('dashboard', { alertMessage: null, username: null});
 })
