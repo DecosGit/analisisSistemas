@@ -13,7 +13,7 @@
 
 <body>
     <div class="container">
-        <form form id="formularioUsuario" method="post" action="/createUser" onsubmit="return validaciones()">
+        <form form id="formularioUsuario" method="post" action="/editUsuario/<%= usuario.id %>" onsubmit="return validaciones()">
             <div class="row">
                 <h2 class="text-center">Formulario para editar usuario</h2>
             </div>
@@ -26,7 +26,7 @@
                 </div>
                 <div class="col-sm-6">
                     <label for="uiLabelApellidos" class="form-label text-center">Apellidos:</label>
-                    <input type="text" class="form-control" id="uiApellidos" name="Apellidos"
+                    <input type="text" class="form-control" id="uiApellidos" name="apellidos"
                         value="<%= usuario.apellido %>" required>
                 </div>
             </div>
@@ -94,8 +94,9 @@
                     title: 'Oops...',
                     text: 'Seleccione un rol válido.'
                 });
+                return false;
             }
-    
+            return true;
         }
 
     </script>

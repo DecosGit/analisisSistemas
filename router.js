@@ -39,6 +39,8 @@ router.post('/deleteUsuario/:id', userController.deleteUsuario)
 
 router.get('/editarUsuario/:id', userController.getUsuario)
 
+router.post('/editUsuario/:id', userController.editarUsuario)
+
 router.post('/crearEmpleo', empleoController.createJob)
 
 router.get('/empleo', empleoController.findEmpleos)

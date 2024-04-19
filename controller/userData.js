@@ -186,3 +186,44 @@ exports.getUsuario = (req, res) => {
     }
 }
 
+exports.editarUsuario = (req, res) => {
+    try {
+        const userId = req.params.id; 
+        let nombres = req.body.nombres
+        let apellidos = req.body.apellidos
+        let cui = req.body.cui
+        let correo = req.body.correo
+        let fecha = Date.now()
+        let rol = req.body.rol
+
+        // Construir la consulta de inserción
+        const update = 'UPDATE usuarios SET nombre = ?, apellido = ?, dpi = ?, correo_electronico = ?, rol = ? WHERE id = ?'
+        const valores = [nombres, apellidos, cui, correo, rol, userId]; // Reemplaza valor1, valor2, valor3 con los valores que deseas actualizar
+        const conexion = bd();
+        conexion.query(update, valores, (error, results) => {
+            if (error) {
+                console.error('Error al actualizar en la base de datos:', error);
+                return res.status(500).json({ error: 'Error al actualizar en la base de datos' });
+            }
+            
+            // Verificar si se actualizó correctamente
+            if (results.affectedRows > 0) 
+            {
+                // Si se actualizó al menos una fila, significa que se actualizó correctamente
+                console.log('Actualización exitosa');
+                this.getUsuarios(req, res)            
+            } 
+            else 
+            {
+                // Si no se actualizó ninguna fila, significa que no se pudo actualizars
+                console.log('No se pudo actualizar');
+                this.getUsuarios(req, res)  
+            }
+        });
+    } catch (error) {
+        console.error(error)
+        // Si hay un error, envía una alerta y permanece en la misma página
+        this.getUsuarios(req, res)  
+    }
+}
+
