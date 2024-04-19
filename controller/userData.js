@@ -162,3 +162,27 @@ exports.deleteUsuario = (req, res) => {
     }
 }
 
+exports.getUsuario = (req, res) => {
+    try {
+        const userId = req.params.id; // Usamos req.params en lugar de req.body para obtener el ID de la URL
+        const conexion = bd();
+        conexion.query('SELECT * FROM usuarios WHERE id = ?', [userId], (error, results) => {
+            if (error) {
+                console.error('Error al ejecutar la consulta:', error);
+                return res.render('adminUsuarios', { alertMessage: 'Error al ejecutar la consulta' });
+            }
+
+            if (results.length > 0) {
+                // Si se encontraron datos, renderizar el formulario de edición con los datos del usuario
+                return res.render('editarUsuario', { usuario: results[0] });
+            } else {
+                // Si no se encontraron datos, renderizar la página de administración con un mensaje de error
+                return res.render('adminUsuarios', { alertMessage: 'No existe un usuario con ese ID' });
+            }
+        });
+    } catch (error) {
+        console.error(error)
+        res.render('adminUsuarios', { alertMessage: 'Error interno del servidor. Inténtalo de nuevo más tarde.' });
+    }
+}
+

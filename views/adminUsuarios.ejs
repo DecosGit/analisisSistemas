@@ -31,7 +31,7 @@
                         <td><%= usuario.apellido %></td>
                         <td><%= usuario.correo_electronico %></td>
                         <td>
-                            <a href="/editUsuario/<%= usuario.id %>" class="btn btn-primary"><i class="fas fa-edit"></i> Editar</a>
+                            <a href="/editarUsuario/<%= usuario.id %>" class="btn btn-primary"><i class="fas fa-edit"></i> Editar</a>
                             <form action="/deleteUsuario/<%= usuario.id %>" method="POST">
                                 <input type="hidden" name="userId" value="<%= usuario.id %>">
                                 <button type="submit" class="btn btn-danger"><i class="fas fa-trash-alt"></i> Eliminar</button>
