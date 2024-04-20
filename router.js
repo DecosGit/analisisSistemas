@@ -23,6 +23,12 @@ router.get('/recoveryPassword', (req, res) => {
     res.render('recoveryPassword');
 })
 
+router.get('/adminUsuarios', userController.getUsuarios);
+
+router.get('/createUserAdmin', (req, res) => {
+    res.render('createUserAdmin');
+})
+
 router.get('/dashboard', (req, res) => {
     res.render('dashboard', { alertMessage: null, username: usernameGlobal.getUserGlobal() });
 })    
@@ -40,6 +46,14 @@ router.get('/editarEmpleo', (req, res) => {
 router.post('/editarEmpleo', empleoController.editJob)
 
 router.post('/opcionEliminarEmpleo', empleoController.deleteJob)
+
+router.post('/createUserAdmin', userController.createUserAdmin)
+
+router.post('/deleteUsuario/:id', userController.deleteUsuario)
+
+router.get('/editarUsuario/:id', userController.getUsuario)
+
+router.post('/editUsuario/:id', userController.editarUsuario)
 
 router.post('/crearEmpleo', empleoController.createJob)
 
