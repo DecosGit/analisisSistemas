@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Crear Empleo</title>
+    <title>Eliminar Empleo</title>
     <!-- Enlace a Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
@@ -46,28 +46,42 @@
         </div>
     </nav>
 
-    <form class="container-fluid mt-5 ml-5 mr-5" action="/crearEmpleo" method="post">
+    <% if(data && data.length){      
+        // Crear un objeto Date a partir de la fecha original
+        const fecha = new Date(data[0].fecha_vencimiento);
+        
+        // Extraer día, mes y año
+        const dia = fecha.getDate().toString().padStart(2, '0');
+        const mes = (fecha.getMonth() + 1).toString().padStart(2, '0');
+        const anio = fecha.getFullYear();
+        // Reorganiza los componentes para formar el formato DD-MM-YYYY
+        const fechaVencimientoConvertida = anio + "-" + mes + "-" + dia;
+        console.log(fechaVencimientoConvertida);
+          %> 
+    <form class="container-fluid mt-5 ml-5 mr-5" action="/editarEmpleo" method="post">
+        <input type="hidden" id="datos" name="datos" value="<%= data[0].id %>">
         <div class="mb-3 mt-5">
             <label for="puesto" class="form-label mt-5">Titulo Perfil:</label>
             <input type="text" class="form-control" id="puesto" name="puesto"
-                placeholder="Ingrese el nombre del puesto" required>
+                placeholder="Ingrese el nombre del puesto" required value="<%= data[0].nombre %>">
         </div>
         <div class="mb-3">
             <label for="descripcion" class="form-label">Descripción:</label>
             <input type="text" class="form-control" id="descripcion" name="descripcion"
-                placeholder="Describa el puesto" required>
+                placeholder="Describa el puesto" required value="<%= data[0].descripcion %>">
         </div>
         <div class="mb-3">
             <label for="sueldo" class="form-label">Sueldo:</label>
-            <input type="text" class="form-control" id="sueldo" name="sueldo"
-                placeholder="Ingrese el sueldo asignado" required>
+            <input type="text" class="form-control" id="sueldo" name="sueldo" 
+                placeholder="Ingrese el sueldo asignado" required value="<%= data[0].sueldo %>">
         </div>
         <div class="mb-3">
             <label for="fecha" class="form-label">Fecha de vencimiento:</label>
-            <input type="date" class="form-control" id="fecha" name="fecha" required>
+            <input type="date" class="form-control" id="fecha" name="fecha" required value="<%= fechaVencimientoConvertida %>">
         </div>
-        <button type="submit">Crear Empleo</button>
+        <button class="btn btn-outline-danger" type="submit">Eliminar Empleo</button>
     </form>
+    <% } %>
 
 </body>
 

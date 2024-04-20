@@ -43,8 +43,8 @@
                     </li>
                 </ul>
             </div>
-            <% if (username && username !== null){  %>  
-                <span><%= username %></span>
+            <% if (username && username !== null){ let userName = JSON.parse(username) %>  
+                <span><%= userName[0].nombre %></span>
             <% } %>
         </div>
     </nav>

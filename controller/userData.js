@@ -1,5 +1,6 @@
 // const { getConection } = require('../database/conexionSQLServer')
 const bd = require('../database/conexionSQL')
+const usernameGlobal = require('./userGlobal')
 
 exports.findUser = (req, res) => {
 
@@ -16,7 +17,10 @@ exports.findUser = (req, res) => {
 
             if (results.length > 0) {
                 // Si se encontraron datos, renderizar el dashboard con los datos del usuario
-                return res.render('dashboard', { data: results, username: username, alertMessage: 'Bienvenido ' + username });
+                let resultadoJson = JSON.stringify(results);
+                usernameGlobal.setUserGlobal(resultadoJson);
+                const data = usernameGlobal.getUserGlobal();
+                return res.render('dashboard', { data: results, username: data, alertMessage: 'Bienvenido ' + username });
             } else {
                 // Si no se encontraron datos, renderizar la página de login con un mensaje de error
                 return res.render('login', { alertMessage: 'Usuario no encontrado' });
