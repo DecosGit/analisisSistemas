@@ -4,7 +4,6 @@ const router = express.Router();
 const userController = require('./controller/userData')
 const empleoController = require('./controller/empleoController')
 const usernameGlobal = require('./controller/userGlobal')
-const usernameGlobal = require('./controller/userGlobal')
 
 router.get('/', (req, res) => {
 
