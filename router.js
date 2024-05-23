@@ -58,7 +58,9 @@ router.post('/crearEmpleo', empleoController.createJob)
 
 router.post('/opcionEditarEmpleo', empleoController.findEditJob)
 
-router.post('/aplicarEmpleo', empleoController.aplicarEmpleo)
+router.post('/opcionAplicarEmpleo', (req, res) => {
+    res.render('aplicarEmpleo', { username: usernameGlobal.getUserGlobal() });
+})
 
 router.get('/noticias', (req, res) => {
     res.render('noticias');

@@ -231,3 +231,32 @@ exports.editarUsuario = (req, res) => {
     }
 }
 
+exports.getDatosUsuarioAplicar = async (req, res) => {
+    try {
+        const userData = usernameGlobal.getUserGlobal();
+
+        let user = req.body.datosAplicar
+
+        const conexion = bd()
+        conexion.query('select * from usuarios where estado = 1 AND id = ?',
+            [user], (error, results) => {
+                if (error) {
+                    console.error('Error al ejecutar la consulta:', error);
+                    res.status(500).json({ error: 'Error al ejecutar la consulta' });
+                    return;
+                }
+                if (results.length > 0) {
+                    // Si se encontraron datos, renderizar el dashboard con los datos del usuario
+                    return res.render('aplicarEmpleo', { usuario: results, username: userData });
+                } else {
+                    // Si no se encontraron datos, renderizar la página de login con un mensaje de error
+                    return res.render('empleo', { usuario: null, alertMessage: 'Empleo no encontrado' });
+                }
+            })
+
+    } catch (error) {
+        console.error(error)
+        // Si hay un error, envía una alerta y permanece en la misma página
+        res.render('empleo', { alertMessage: 'Error interno del servidor. Inténtalo de nuevo más tarde.' });
+    }
+}

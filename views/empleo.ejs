@@ -325,11 +325,14 @@
                                 </div>
                                 <div
                                     class="card-footer bg-transparent border-success d-flex justify-content-center align-items-center">
-                                    <form action="/aplicarEmpleo" method="post">
-                                        <input type="hidden" name="datos" value="<%= JSON.stringify(item) %>" >
-                                        <button class="btn btn-outline-success" type="submit">Aplicar</button>
-                                    </form>
-                                    <% if(username && username !== null){ let userName = JSON.parse(username); if(userName[0].rol == 'Admin'){  %>
+                                    <% if (username && username !== null){ let userName = JSON.parse(username) %>  
+                                        <form action="/opcionAplicarEmpleo" method="post">
+                                            <input type="hidden">
+                                            <button class="btn btn-outline-success" type="submit">Aplicar</button>
+                                        </form>
+                                    <% } %>
+                                    
+                                    <% if(username && username !== null){ let userName = JSON.parse(username); if(userName[0].rol == 'Admin'){  %>                                        
                                         <form action="/opcionEditarEmpleo" method="post">
                                             <input type="hidden" id="datosEdit" name="datosEdit" value="<%= item.id %>" >
                                             <button class="btn btn-outline-primary" type="submit">Editar</button>
