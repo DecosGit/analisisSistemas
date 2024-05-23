@@ -75,7 +75,7 @@ router.get('/keep_forward', (req, res) => {
 // Configuración de multer para la carga de archivos
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
-        cb(null, 'resources/'); // Asegúrate de que esta carpeta exista
+        cb(null, 'resources/FotoCv/'); // Asegúrate de que esta carpeta exista
     },
     filename: (req, file, cb) => {
         cb(null, `${Date.now()}-${file.originalname}`);

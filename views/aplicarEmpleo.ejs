@@ -46,9 +46,7 @@
                         <label for="photo" class="form-label">Foto (formato jpg)</label>
                         <input type="file" class="form-control" id="photo" name="photo" accept="image/jpeg" required
                             onchange="handlePhotoUpload()">
-                        <button type="submit" class="btn btn-primary mt-2" id="uploadPhotoButton">Subir Foto</button>
-                        <button type="button" class="btn btn-danger mt-2" id="deletePhotoButton" style="display: none;"
-                            onclick="deletePhoto()">Eliminar Foto</button>
+                        <button type="submit" class="btn btn-primary mt-2" id="uploadPhotoButton" style="display: none;">Subir Foto</button>                        
                     </div>
 
                     <!-- Nombre completo -->
@@ -184,18 +182,12 @@
 
         function handlePhotoUpload() {
             const photoInput = document.getElementById('photo');
-            const deletePhotoButton = document.getElementById('deletePhotoButton');
+            const uploadPhotoButton = document.getElementById('uploadPhotoButton');
             if (photoInput.files.length > 0) {
-                deletePhotoButton.style.display = 'block';
+                uploadPhotoButton.style.display = 'block';
             } else {
-                deletePhotoButton.style.display = 'none';
+                uploadPhotoButton.style.display = 'none';
             }
-        }
-
-        function deletePhoto() {
-            const photoInput = document.getElementById('photo');
-            photoInput.value = '';
-            handlePhotoUpload();
         }
     </script>
 </body>
