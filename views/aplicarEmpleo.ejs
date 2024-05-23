@@ -41,6 +41,7 @@
                 <form id="formSection1" action="/uploadPhoto" method="POST" enctype="multipart/form-data">
                     <% if (username && username !== null) {
                         let userName = JSON.parse(username) %>
+                        <input type="hidden" id="cui" name="cui" value="<%= userName[0].dpi %>">
                     <!-- Botón para adjuntar foto -->
                     <div class="mb-3">
                         <label for="photo" class="form-label">Foto (formato jpg)</label>

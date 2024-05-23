@@ -78,7 +78,8 @@ const storage = multer.diskStorage({
         cb(null, 'resources/FotoCv/'); // Asegúrate de que esta carpeta exista
     },
     filename: (req, file, cb) => {
-        cb(null, `${Date.now()}-${file.originalname}`);
+        const dpi = req.body.cui; // Obtener el DPI del cuerpo de la solicitud
+        cb(null, `${dpi}-FotoCv.jpg`); // Renombrar el archivo con el DPI
     }
 });
 
