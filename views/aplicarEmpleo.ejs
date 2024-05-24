@@ -189,7 +189,7 @@
                             <label for="document" class="form-label">Documento (.pdf)</label>
                             <input type="file" class="form-control" id="document" name="document" accept=".pdf">
                         </div>
-                        <button type="submit" class="btn btn-primary">Agregar</button>
+                        <button type="submit" class="btn btn-primary" onclick="addStudy(event)">Agregar</button>
                     </form>
                     <table class="table mt-3">
                         <thead>
@@ -313,7 +313,8 @@
             const institution = document.getElementById('institution').value;
             const degree = document.getElementById('degree').value;
             const completed = document.getElementById('completed').value;
-            const document = document.getElementById('document').files[0];
+            const documentInput = document.getElementById('document');
+            const documentName = documentInput.files.length > 0 ? documentInput.files[0].name : '';
 
             const studiesTable = document.getElementById('studiesTable');
             const newRow = document.createElement('tr');
@@ -324,7 +325,7 @@
                 <td>${institution}</td>
                 <td>${degree}</td>
                 <td>${completed}</td>
-                <td>${document ? document.name : ''}</td>
+                <td>${documentName}</td>
                 <td><button type="button" class="btn btn-danger btn-sm" onclick="removeStudy(this)">Eliminar</button></td>
             `;
             studiesTable.appendChild(newRow);
