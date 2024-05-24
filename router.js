@@ -72,7 +72,7 @@ router.get('/keep_forward', (req, res) => {
     res.render('keep_forward');
 })
 
-// Configuración de multer para la carga de archivos
+// Configuración de multer para la carga de fotos
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
         cb(null, 'resources/FotoCv/'); // Asegúrate de que esta carpeta exista
@@ -91,6 +91,28 @@ router.post('/uploadPhoto', upload.single('photo'), (req, res) => {
         res.send('Foto subida exitosamente');
     } else {
         res.send('Error al subir la foto');
+    }
+});
+
+// Configuración de multer para la carga de archivos
+const storageEstudios = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, 'resources/Estudios/'); // Asegúrate de que esta carpeta exista
+    },
+    filename: (req, file, cb) => {
+        const dpi = req.body.cui; // Obtener el DPI del cuerpo de la solicitud
+        cb(null, `${dpi}.pdf`); // Renombrar el archivo con el DPI
+    }
+});
+
+const uploadEstudios = multer({ storage: storageEstudios });
+
+// Ruta para manejar la carga de fotos
+router.post('/uploadEstudios', uploadEstudios.single('document'), (req, res) => {
+    if (req.file) {
+        res.send('Documento subido exitosamente');
+    } else {
+        res.send('Error al subir el documento');
     }
 });
 
