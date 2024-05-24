@@ -23,16 +23,13 @@
         <h1 class="mt-5">Formulario para aplicar a empleo</h1>
         <ul class="nav nav-tabs" id="myTab" role="tablist">
             <li class="nav-item" role="presentation">
-                <button class="nav-link active" id="section1-tab" data-bs-toggle="tab" data-bs-target="#section1"
-                    type="button" role="tab" aria-controls="section1" aria-selected="true">Datos personales</button>
+                <button class="nav-link active" id="section1-tab" data-bs-toggle="tab" data-bs-target="#section1" type="button" role="tab" aria-controls="section1" aria-selected="true">Datos personales</button>
             </li>
             <li class="nav-item" role="presentation">
-                <button class="nav-link" id="section2-tab" data-bs-toggle="tab" data-bs-target="#section2" type="button"
-                    role="tab" aria-controls="section2" aria-selected="false">Constancia de estudios</button>
+                <button class="nav-link" id="section2-tab" data-bs-toggle="tab" data-bs-target="#section2" type="button" role="tab" aria-controls="section2" aria-selected="false">Documentos adjuntos</button>
             </li>
             <li class="nav-item" role="presentation">
-                <button class="nav-link" id="section3-tab" data-bs-toggle="tab" data-bs-target="#section3" type="button"
-                    role="tab" aria-controls="section3" aria-selected="false">Experiencia laboral</button>
+                <button class="nav-link" id="section3-tab" data-bs-toggle="tab" data-bs-target="#section3" type="button" role="tab" aria-controls="section3" aria-selected="false">Estudios universitarios</button>
             </li>
         </ul>
         <div class="tab-content" id="myTabContent">
@@ -40,24 +37,22 @@
                 let userName = JSON.parse(username) %>
                 <div class="tab-pane fade show active" id="section1" role="tabpanel" aria-labelledby="section1-tab">
                     <!-- Contenido de la Sección 1 -->
-                    <form id="photoUploadForm" action="/uploadPhoto" method="POST" enctype="multipart/form-data" onsubmit="return uploadPhoto(event)">                    
-                            <input type="hidden" id="cui" name="cui" value="<%= userName[0].dpi %>">
+                    <form id="photoUploadForm" enctype="multipart/form-data" onsubmit="return uploadPhoto(event)">
+                        <input type="hidden" id="cui" name="cui" value="<%= userName[0].dpi %>">
                         <!-- Botón para adjuntar foto -->
                         <div class="mb-3">
                             <label for="photo" class="form-label">Foto (formato jpg)</label>
-                            <input type="file" class="form-control" id="photo" name="photo" accept="image/jpeg" required
-                                onchange="handlePhotoUpload()">
-                            <button type="submit" class="btn btn-primary mt-2" id="uploadPhotoButton" style="display: none;">Subir Foto</button>                        
+                            <input type="file" class="form-control" id="photo" name="photo" accept="image/jpeg" required onchange="handlePhotoUpload()">
+                            <button type="submit" class="btn btn-primary mt-2" id="uploadPhotoButton" style="display: none;">Subir Foto</button>
                             <button type="button" class="btn btn-secondary mt-2" id="viewPhotoButton" style="display: none;" onclick="viewPhoto()">Ver Foto</button>
-                        </div>                    
+                        </div>
                     </form>
 
                     <form id="formSection1">
                         <!-- Nombre completo -->
                         <div class="mb-3">
                             <label for="fullName" class="form-label">Nombre Completo</label>
-                            <input type="text" class="form-control" id="fullName" name="fullName"
-                                value="<%= userName[0].nombre %> <%= userName[0].apellido %>" readonly>
+                            <input type="text" class="form-control" id="fullName" name="fullName" value="<%= userName[0].nombre %> <%= userName[0].apellido %>" readonly>
                         </div>
 
                         <!-- Fecha de nacimiento -->
@@ -79,22 +74,19 @@
                         <!-- Código único de identificación -CUI- -->
                         <div class="mb-3">
                             <label for="cui" class="form-label">Código Único de Identificación -CUI-</label>
-                            <input type="text" class="form-control" id="cui" name="cui" value="<%= userName[0].dpi %>"
-                                readonly>
+                            <input type="text" class="form-control" id="cui" name="cui" value="<%= userName[0].dpi %>" readonly>
                         </div>
 
                         <!-- Dirección de residencia -->
                         <div class="mb-3">
                             <label for="residenceAddress" class="form-label">Dirección de Residencia</label>
-                            <textarea class="form-control" id="residenceAddress" name="residenceAddress" rows="3"
-                                required></textarea>
+                            <textarea class="form-control" id="residenceAddress" name="residenceAddress" rows="3" required></textarea>
                         </div>
 
                         <!-- Dirección para recibir notificaciones -->
                         <div class="mb-3">
                             <label for="notificationAddress" class="form-label">Dirección para Recibir Notificaciones</label>
-                            <textarea class="form-control" id="notificationAddress" name="notificationAddress" rows="3"
-                                required></textarea>
+                            <textarea class="form-control" id="notificationAddress" name="notificationAddress" rows="3" required></textarea>
                         </div>
 
                         <!-- Números telefónicos -->
@@ -106,8 +98,7 @@
                         <!-- Correo electrónico -->
                         <div class="mb-3">
                             <label for="email" class="form-label">Correo Electrónico</label>
-                            <input type="email" class="form-control" id="email" name="email"
-                                value="<%= userName[0].correo_electronico %>" readonly>
+                            <input type="email" class="form-control" id="email" name="email" value="<%= userName[0].correo_electronico %>" readonly>
                         </div>
 
                         <!-- Nacionalidad -->
@@ -151,98 +142,367 @@
                 </div>
                 <div class="tab-pane fade" id="section2" role="tabpanel" aria-labelledby="section2-tab">
                     <!-- Contenido de la Sección 2 -->
-                    <form id="formSection2">
-                        <!-- Campos de la Sección 2 -->
+                    <form id="antecedentesPenalesUploadForm" enctype="multipart/form-data" onsubmit="return uploadAntecedentesPenales(event)">
+                        <input type="hidden" id="cui" name="cui" value="<%= userName[0].dpi %>">
                         <div class="mb-3">
-                            <label for="document" class="form-label">Documento</label>
-                            <input type="file" class="form-control" id="document" required>
+                            <label for="documentAntecedentesPenales" class="form-label">Carencia de Antecedentes Penales (formato pdf)</label>
+                            <input type="file" class="form-control" id="documentAntecedentesPenales" name="documentAntecedentesPenales" accept="application/pdf" required onchange="handleAntecedentesPenalesUpload()">
+                            <button type="submit" class="btn btn-primary mt-2" id="uploadAntecedentesPenalesButton" style="display: none;">Subir Documento</button>
+                            <button type="button" class="btn btn-secondary mt-2" id="viewAntecedentesPenalesButton" style="display: none;" onclick="viewAntecedentesPenales()">Ver Documento</button>
                         </div>
-                        <!-- Otros campos -->
-                        <button type="button" class="btn btn-secondary" onclick="prevTab(1)">Anterior</button>
-                        <button type="button" class="btn btn-primary" onclick="nextTab(3)">Siguiente</button>
                     </form>
+                    <form id="antecedentesPoliciacosUploadForm" enctype="multipart/form-data" onsubmit="return uploadAntecedentesPoliciacos(event)">
+                        <input type="hidden" id="cui" name="cui" value="<%= userName[0].dpi %>">
+                        <div class="mb-3">
+                            <label for="documentAntecedentesPoliciacos" class="form-label">Carencia de Antecedentes Policiacos (formato pdf)</label>
+                            <input type="file" class="form-control" id="documentAntecedentesPoliciacos" name="documentAntecedentesPoliciacos" accept="application/pdf" required onchange="handleAntecedentesPoliciacosUpload()">
+                            <button type="submit" class="btn btn-primary mt-2" id="uploadAntecedentesPoliciacosButton" style="display: none;">Subir Documento</button>
+                            <button type="button" class="btn btn-secondary mt-2" id="viewAntecedentesPoliciacosButton" style="display: none;" onclick="viewAntecedentesPoliciacos()">Ver Documento</button>
+                        </div>
+                    </form>
+                    <form id="declaracionJuradaUploadForm" enctype="multipart/form-data" onsubmit="return uploadDeclaracionJurada(event)">
+                        <input type="hidden" id="cui" name="cui" value="<%= userName[0].dpi %>">
+                        <div class="mb-3">
+                            <label for="documentDeclaracionJurada" class="form-label">Declaración Jurada (formato pdf)</label>
+                            <input type="file" class="form-control" id="documentDeclaracionJurada" name="documentDeclaracionJurada" accept="application/pdf" required onchange="handleDeclaracionJuradaUpload()">
+                            <button type="submit" class="btn btn-primary mt-2" id="uploadDeclaracionJuradaButton" style="display: none;">Subir Documento</button>
+                            <button type="button" class="btn btn-secondary mt-2" id="viewDeclaracionJuradaButton" style="display: none;" onclick="viewDeclaracionJurada()">Ver Documento</button>
+                        </div>
+                    </form>
+                    <form id="autenticaUploadForm" enctype="multipart/form-data" onsubmit="return uploadAutentica(event)">
+                        <input type="hidden" id="cui" name="cui" value="<%= userName[0].dpi %>">
+                        <div class="mb-3">
+                            <label for="documentAutentica" class="form-label">Auténtica de documentos (formato pdf)</label>
+                            <input type="file" class="form-control" id="documentAutentica" name="documentAutentica" accept="application/pdf" required onchange="handleAutenticaUpload()">
+                            <button type="submit" class="btn btn-primary mt-2" id="uploadAutenticaButton" style="display: none;">Subir Documento</button>
+                            <button type="button" class="btn btn-secondary mt-2" id="viewAutenticaButton" style="display: none;" onclick="viewAutentica()">Ver Documento</button>
+                        </div>
+                    </form>
+                    <form id="dpiUploadForm" enctype="multipart/form-data" onsubmit="return uploadDpi(event)">
+                        <input type="hidden" id="cui" name="cui" value="<%= userName[0].dpi %>">
+                        <div class="mb-3">
+                            <label for="documentDpi" class="form-label">Documento Personal de Identificación -DPI- (formato pdf)</label>
+                            <input type="file" class="form-control" id="documentDpi" name="documentDpi" accept="application/pdf" required onchange="handleDpiUpload()">
+                            <button type="submit" class="btn btn-primary mt-2" id="uploadDpiButton" style="display: none;">Subir Documento</button>
+                            <button type="button" class="btn btn-secondary mt-2" id="viewDpiButton" style="display: none;" onclick="viewDpi()">Ver Documento</button>
+                        </div>
+                    </form>
+                    <form id="renasUploadForm" enctype="multipart/form-data" onsubmit="return uploadRenas(event)">
+                        <input type="hidden" id="cui" name="cui" value="<%= userName[0].dpi %>">
+                        <div class="mb-3">
+                            <label for="documentRenas" class="form-label">Registro Nacional de Agresores Sexuales -RENAS- (formato pdf)</label>
+                            <input type="file" class="form-control" id="documentRenas" name="documentRenas" accept="application/pdf" required onchange="handleRenasUpload()">
+                            <button type="submit" class="btn btn-primary mt-2" id="uploadRenasButton" style="display: none;">Subir Documento</button>
+                            <button type="button" class="btn btn-secondary mt-2" id="viewRenasButton" style="display: none;" onclick="viewRenas()">Ver Documento</button>
+                        </div>
+                    </form>
+                    <form id="rtuUploadForm" enctype="multipart/form-data" onsubmit="return uploadRtu(event)">
+                        <input type="hidden" id="cui" name="cui" value="<%= userName[0].dpi %>">
+                        <div class="mb-3">
+                            <label for="documentRtu" class="form-label">Registro Tributario Unificado -RTU- (formato pdf)</label>
+                            <input type="file" class="form-control" id="documentRtu" name="documentRtu" accept="application/pdf" required onchange="handleRtuUpload()">
+                            <button type="submit" class="btn btn-primary mt-2" id="uploadRtuButton" style="display: none;">Subir Documento</button>
+                            <button type="button" class="btn btn-secondary mt-2" id="viewRtuButton" style="display: none;" onclick="viewRtu()">Ver Documento</button>
+                        </div>
+                    </form>
+                    <form id="otrosUploadForm" enctype="multipart/form-data" onsubmit="return uploadOtros(event)">
+                        <input type="hidden" id="cui" name="cui" value="<%= userName[0].dpi %>">
+                        <div class="mb-3">
+                            <label for="documentOtros" class="form-label">Otros (formato pdf)</label>
+                            <input type="file" class="form-control" id="documentOtros" name="documentOtros" accept="application/pdf" required onchange="handleOtrosUpload()">
+                            <button type="submit" class="btn btn-primary mt-2" id="uploadOtrosButton" style="display: none;">Subir Documento</button>
+                            <button type="button" class="btn btn-secondary mt-2" id="viewOtrosButton" style="display: none;" onclick="viewOtros()">Ver Documento</button>
+                        </div>
+                    </form>
+                    <button type="button" class="btn btn-primary" onclick="nextTab(3)">Siguiente</button>
                 </div>
                 <div class="tab-pane fade" id="section3" role="tabpanel" aria-labelledby="section3-tab">
                     <!-- Contenido de la Sección 3 -->
-                    <form id="formSection3">
-                        <!-- Campos de la Sección 3 -->
-                        <div class="mb-3">
-                            <label for="comments" class="form-label">Comentarios</label>
-                            <textarea class="form-control" id="comments" rows="3" required></textarea>
-                        </div>
-                        <!-- Otros campos -->
-                        <button type="button" class="btn btn-secondary" onclick="prevTab(2)">Anterior</button>
-                        <button type="submit" class="btn btn-success">Enviar</button>
+                    <form id="universityStudiesForm">
+                        <!-- Formulario de estudios universitarios -->
                     </form>
                 </div>
             <% } %>
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
     <script>
+        // Función para mover a la siguiente pestaña
         function nextTab(tabIndex) {
-            var nextTab = document.querySelector('#myTab button[data-bs-target="#section' + tabIndex + '"]');
-            var tab = new bootstrap.Tab(nextTab);
+            const tab = new bootstrap.Tab(document.querySelector(`#myTab button:nth-child(${tabIndex})`));
             tab.show();
         }
 
-        function prevTab(tabIndex) {
-            var prevTab = document.querySelector('#myTab button[data-bs-target="#section' + tabIndex + '"]');
-            var tab = new bootstrap.Tab(prevTab);
-            tab.show();
-        }
-
+        // Función para manejar la carga de la foto
         function handlePhotoUpload() {
-            const photoInput = document.getElementById('photo');
-            const uploadPhotoButton = document.getElementById('uploadPhotoButton');
-            const viewPhotoButton = document.getElementById('viewPhotoButton');
-            if (photoInput.files.length > 0) {
-                uploadPhotoButton.style.display = 'block';
-                viewPhotoButton.style.display = 'block';
-            } else {
-                uploadPhotoButton.style.display = 'none';
-                viewPhotoButton.style.display = 'none';
-            }
+            document.getElementById('uploadPhotoButton').style.display = 'block';
         }
 
-        function viewPhoto() {
-            const photoInput = document.getElementById('photo');
-            const file = photoInput.files[0];
-            if (file) {
-                const url = URL.createObjectURL(file);
-                window.open(url, '_blank');
-            }
+        // Función para manejar la carga de antecedentes penales
+        function handleAntecedentesPenalesUpload() {
+            document.getElementById('uploadAntecedentesPenalesButton').style.display = 'block';
         }
 
-        function validatePhotoUpload() {
-            const photoInput = document.getElementById('photo');
-            if (photoInput.files.length === 0) {
-                alert('Por favor, seleccione una foto para subir.');
-                return false;
-            }
-            return true;
+        // Función para manejar la carga de antecedentes policiacos
+        function handleAntecedentesPoliciacosUpload() {
+            document.getElementById('uploadAntecedentesPoliciacosButton').style.display = 'block';
         }
 
-        async function uploadPhoto(event) {
+        // Función para manejar la carga de auténtica
+        function handleAutenticaUpload() {
+            document.getElementById('uploadAutenticaButton').style.display = 'block';
+        }
+
+        // Función para manejar la carga de DeclaracionJurada
+        function handleDeclaracionJuradaUpload() {
+            document.getElementById('uploadDeclaracionJuradaButton').style.display = 'block';
+        }
+
+        // Función para manejar la carga de Dpi
+        function handleDpiUpload() {
+            document.getElementById('uploadDpiButton').style.display = 'block';
+        }
+
+        // Función para manejar la carga de Otros
+        function handleOtrosUpload() {
+            document.getElementById('uploadOtrosButton').style.display = 'block';
+        }
+
+        // Función para manejar la carga de Renas
+        function handleRenasUpload() {
+            document.getElementById('uploadRenasButton').style.display = 'block';
+        }
+
+        // Función para manejar la carga de Rtu
+        function handleRtuUpload() {
+            document.getElementById('uploadRtuButton').style.display = 'block';
+        }
+
+        // Función para subir la foto
+        function uploadPhoto(event) {
             event.preventDefault();
-            const form = document.getElementById('photoUploadForm');
-            const formData = new FormData(form);
-            try {
-                const response = await fetch('/uploadPhoto', {
-                    method: 'POST',
-                    body: formData
-                });
-                if (response.ok) {
-                    alert('Foto subida exitosamente.');
+            const formData = new FormData(document.getElementById('photoUploadForm'));
+            $.ajax({
+                url: '/uploadPhoto',
+                type: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function(response) {
                     document.getElementById('viewPhotoButton').style.display = 'block';
-                } else {
-                    alert('Error al subir la foto.');
+                },
+                error: function(error) {
+                    console.error('Error uploading photo:', error);
                 }
-            } catch (error) {
-                alert('Error al subir la foto.');
-            }
+            });
+        }
+
+        // Función para subir el documento de antecedentes penales
+        function uploadAntecedentesPenales(event) {
+            event.preventDefault();
+            const formData = new FormData(document.getElementById('antecedentesPenalesUploadForm'));
+            $.ajax({
+                url: '/uploadAntecedentesPenales',
+                type: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function(response) {
+                    document.getElementById('viewAntecedentesPenalesButton').style.display = 'block';
+                },
+                error: function(error) {
+                    console.error('Error uploading document:', error);
+                }
+            });
+        }
+
+        // Función para subir el documento de antecedentes policiacos
+        function uploadAntecedentesPoliciacos(event) {
+            event.preventDefault();
+            const formData = new FormData(document.getElementById('antecedentesPoliciacosUploadForm'));
+            $.ajax({
+                url: '/uploadAntecedentesPoliciacos',
+                type: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function(response) {
+                    document.getElementById('viewAntecedentesPoliciacosButton').style.display = 'block';
+                },
+                error: function(error) {
+                    console.error('Error uploading document:', error);
+                }
+            });
+        }
+
+        // Función para subir el documento de Autentica
+        function uploadAutentica(event) {
+            event.preventDefault();
+            const formData = new FormData(document.getElementById('autenticaUploadForm'));
+            $.ajax({
+                url: '/uploadAutentica',
+                type: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function(response) {
+                    document.getElementById('viewAutenticaButton').style.display = 'block';
+                },
+                error: function(error) {
+                    console.error('Error uploading document:', error);
+                }
+            });
+        }
+
+        // Función para subir el documento de DeclaracionJurada
+        function uploadDeclaracionJurada(event) {
+            event.preventDefault();
+            const formData = new FormData(document.getElementById('declaracionJuradaUploadForm'));
+            $.ajax({
+                url: '/uploadDeclaracionJurada',
+                type: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function(response) {
+                    document.getElementById('viewDeclaracionJuradaButton').style.display = 'block';
+                },
+                error: function(error) {
+                    console.error('Error uploading document:', error);
+                }
+            });
+        }
+
+        // Función para subir el documento de dpi
+        function uploadDpi(event) {
+            event.preventDefault();
+            const formData = new FormData(document.getElementById('dpiUploadForm'));
+            $.ajax({
+                url: '/uploadDpi',
+                type: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function(response) {
+                    document.getElementById('viewDpiButton').style.display = 'block';
+                },
+                error: function(error) {
+                    console.error('Error uploading document:', error);
+                }
+            });
+        }
+
+        // Función para subir el documento de Otros
+        function uploadOtros(event) {
+            event.preventDefault();
+            const formData = new FormData(document.getElementById('otrosUploadForm'));
+            $.ajax({
+                url: '/uploadOtros',
+                type: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function(response) {
+                    document.getElementById('viewOtrosButton').style.display = 'block';
+                },
+                error: function(error) {
+                    console.error('Error uploading document:', error);
+                }
+            });
+        }
+
+        // Función para subir el documento de Renas
+        function uploadRenas(event) {
+            event.preventDefault();
+            const formData = new FormData(document.getElementById('renasUploadForm'));
+            $.ajax({
+                url: '/uploadRenas',
+                type: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function(response) {
+                    document.getElementById('viewRenasButton').style.display = 'block';
+                },
+                error: function(error) {
+                    console.error('Error uploading document:', error);
+                }
+            });
+        }
+
+        // Función para subir el documento de Rtu
+        function uploadRtu(event) {
+            event.preventDefault();
+            const formData = new FormData(document.getElementById('rtuUploadForm'));
+            $.ajax({
+                url: '/uploadRtu',
+                type: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function(response) {
+                    document.getElementById('viewRtuButton').style.display = 'block';
+                },
+                error: function(error) {
+                    console.error('Error uploading document:', error);
+                }
+            });
+        }
+
+        // Función para ver la foto
+        function viewPhoto() {
+            const cui = document.getElementById('cui').value;
+            window.open(`/resources/FotoCv/${cui}.jpg`, '_blank');
+        }
+
+        // Función para ver el documento de antecedentes penales
+        function viewAntecedentesPenales() {
+            const cui = document.getElementById('cui').value;
+            window.open(`/resources/AntecedentesPenales/${cui}.pdf`, '_blank');
+        }
+
+        // Función para ver el documento de antecedentes policiacos
+        function viewAntecedentesPoliciacos() {
+            const cui = document.getElementById('cui').value;
+            window.open(`/resources/AntecedentesPoliciacos/${cui}.pdf`, '_blank');
+        }
+
+        // Función para ver el documento de Autentica
+        function viewAutentica() {
+            const cui = document.getElementById('cui').value;
+            window.open(`/resources/Autentica/${cui}.pdf`, '_blank');
+        }
+
+        // Función para ver el documento de DeclaracionJurada
+        function viewDeclaracionJurada() {
+            const cui = document.getElementById('cui').value;
+            window.open(`/resources/DeclaracionJurada/${cui}.pdf`, '_blank');
+        }
+
+        // Función para ver el documento de Dpi
+        function viewDpi() {
+            const cui = document.getElementById('cui').value;
+            window.open(`/resources/Dpi/${cui}.pdf`, '_blank');
+        }
+
+        // Función para ver el documento de Otros
+        function viewOtros() {
+            const cui = document.getElementById('cui').value;
+            window.open(`/resources/Otros/${cui}.pdf`, '_blank');
+        }
+
+        // Función para ver el documento de Rtu
+        function viewRtu() {
+            const cui = document.getElementById('cui').value;
+            window.open(`/resources/Rtu/${cui}.pdf`, '_blank');
+        }
+
+        // Función para ver el documento de Renas
+        function viewRenas() {
+            const cui = document.getElementById('cui').value;
+            window.open(`/resources/Renas/${cui}.pdf`, '_blank');
         }
     </script>
 </body>
