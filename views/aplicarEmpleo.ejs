@@ -253,20 +253,6 @@
                                 <option value="no">No</option>
                             </select>
                         </div>
-                        <form id="otrosUploadForm" enctype="multipart/form-data" onsubmit="return uploadOtros(event)">
-                            <input type="hidden" id="cui" name="cui" value="<%= userName[0].dpi %>">
-                            <div class="mb-3">
-                                <label for="documentOtros" class="form-label">Otros (formato pdf)</label>
-                                <input type="file" class="form-control" id="documentOtros" name="documentOtros" accept="application/pdf" required onchange="handleOtrosUpload()">
-                                <button type="submit" class="btn btn-primary mt-2" id="uploadOtrosButton" style="display: none;">Subir Documento</button>
-                                <button type="button" class="btn btn-secondary mt-2" id="viewOtrosButton" style="display: none;" onclick="viewOtros()">Ver Documento</button>
-                            </div>
-                        </form>
-                        <div class="mb-3" id="universityDocumentUpload" style="display: none;">
-                            <label for="estudios" class="form-label">Documento (formato pdf)</label>
-                            <input type="file" class="form-control" id="estudios" name="estudios" accept="application/pdf" required>
-                            <button type="button" class="btn btn-primary mt-2" id="uploadEstudiosButton" style="display: none;" onclick="uploadEstudiosDocument()">Subir Documento</button>
-                        </div>
                         <button type="button" class="btn btn-primary" onclick="addStudy()">Agregar Estudio</button>
                     </form>
                     <table class="table mt-4">
