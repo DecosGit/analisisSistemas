@@ -218,9 +218,72 @@
                 </div>
                 <div class="tab-pane fade" id="section3" role="tabpanel" aria-labelledby="section3-tab">
                     <!-- Contenido de la Sección 3 -->
-                    <form id="universityStudiesForm">
-                        <!-- Formulario de estudios universitarios -->
+                    <form id="studiesForm">
+                        <div class="mb-3">
+                            <label for="studyType" class="form-label">Tipo de Estudio</label>
+                            <select class="form-select" id="studyType" name="studyType" required>
+                                <option value="">Seleccione una opción</option>
+                                <option value="primario">Primario</option>
+                                <option value="secundario">Secundario</option>
+                                <option value="diversificado">Diversificado</option>
+                                <option value="universitario">Universitario</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="startYear" class="form-label">Año Inicio</label>
+                            <input type="number" class="form-control" id="startYear" name="startYear" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="endYear" class="form-label">Año Fin</label>
+                            <input type="number" class="form-control" id="endYear" name="endYear" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="institution" class="form-label">Establecimiento</label>
+                            <input type="text" class="form-control" id="institution" name="institution" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="titleObtained" class="form-label">Título o Diploma Obtenido</label>
+                            <input type="text" class="form-control" id="titleObtained" name="titleObtained" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="finished" class="form-label">Finalizado</label>
+                            <select class="form-select" id="finished" name="finished" required>
+                                <option value="">Seleccione una opción</option>
+                                <option value="sí">Sí</option>
+                                <option value="no">No</option>
+                            </select>
+                        </div>
+                        <form id="otrosUploadForm" enctype="multipart/form-data" onsubmit="return uploadOtros(event)">
+                            <input type="hidden" id="cui" name="cui" value="<%= userName[0].dpi %>">
+                            <div class="mb-3">
+                                <label for="documentOtros" class="form-label">Otros (formato pdf)</label>
+                                <input type="file" class="form-control" id="documentOtros" name="documentOtros" accept="application/pdf" required onchange="handleOtrosUpload()">
+                                <button type="submit" class="btn btn-primary mt-2" id="uploadOtrosButton" style="display: none;">Subir Documento</button>
+                                <button type="button" class="btn btn-secondary mt-2" id="viewOtrosButton" style="display: none;" onclick="viewOtros()">Ver Documento</button>
+                            </div>
+                        </form>
+                        <div class="mb-3" id="universityDocumentUpload" style="display: none;">
+                            <label for="estudios" class="form-label">Documento (formato pdf)</label>
+                            <input type="file" class="form-control" id="estudios" name="estudios" accept="application/pdf" required>
+                            <button type="button" class="btn btn-primary mt-2" id="uploadEstudiosButton" style="display: none;" onclick="uploadEstudiosDocument()">Subir Documento</button>
+                        </div>
+                        <button type="button" class="btn btn-primary" onclick="addStudy()">Agregar Estudio</button>
                     </form>
+                    <table class="table mt-4">
+                        <thead>
+                            <tr>
+                                <th>Tipo</th>
+                                <th>Año Inicio</th>
+                                <th>Año Fin</th>
+                                <th>Establecimiento</th>
+                                <th>Título Obtenido</th>
+                                <th>Finalizado</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="studiesTableBody">
+                        </tbody>
+                    </table>
                 </div>
             <% } %>
         </div>
@@ -504,6 +567,49 @@
             const cui = document.getElementById('cui').value;
             window.open(`/resources/Renas/${cui}.pdf`, '_blank');
         }
+
+        function addStudy() {
+            const studyType = document.getElementById('studyType').value;
+            const startYear = document.getElementById('startYear').value;
+            const endYear = document.getElementById('endYear').value;
+            const institution = document.getElementById('institution').value;
+            const titleObtained = document.getElementById('titleObtained').value;
+            const finished = document.getElementById('finished').value;
+
+            const tableBody = document.getElementById('studiesTableBody');
+            const newRow = document.createElement('tr');
+
+            newRow.innerHTML = `
+                <td>${studyType}</td>
+                <td>${startYear}</td>
+                <td>${endYear}</td>
+                <td>${institution}</td>
+                <td>${titleObtained}</td>
+                <td>${finished}</td>
+                <td><button type="button" class="btn btn-danger btn-sm" onclick="removeStudy(this)">Eliminar</button></td>
+            `;
+
+            tableBody.appendChild(newRow);
+
+            // Limpiar el formulario
+            document.getElementById('studiesForm').reset();
+            document.getElementById('universityDocumentUpload').style.display = 'none';
+        }
+
+        function removeStudy(button) {
+            const row = button.closest('tr');
+            row.remove();
+        }
+
+        document.getElementById('studyType').addEventListener('change', function() {
+            const studyType = this.value;
+            const documentUpload = document.getElementById('universityDocumentUpload');
+            if (studyType === 'universitario') {
+                documentUpload.style.display = 'block';
+            } else {
+                documentUpload.style.display = 'none';
+            }
+        });
     </script>
 </body>
 
