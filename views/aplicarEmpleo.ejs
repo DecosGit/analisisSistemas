@@ -40,7 +40,7 @@
                 let userName = JSON.parse(username) %>
                 <div class="tab-pane fade show active" id="section1" role="tabpanel" aria-labelledby="section1-tab">
                     <!-- Contenido de la Sección 1 -->
-                    <form id="photoUploadForm" action="/uploadPhoto" method="POST" enctype="multipart/form-data" onsubmit="return validatePhotoUpload()">                    
+                    <form id="photoUploadForm" action="/uploadPhoto" method="POST" enctype="multipart/form-data" onsubmit="return uploadPhoto(event)">                    
                             <input type="hidden" id="cui" name="cui" value="<%= userName[0].dpi %>">
                         <!-- Botón para adjuntar foto -->
                         <div class="mb-3">
@@ -223,6 +223,26 @@
                 return false;
             }
             return true;
+        }
+
+        async function uploadPhoto(event) {
+            event.preventDefault();
+            const form = document.getElementById('photoUploadForm');
+            const formData = new FormData(form);
+            try {
+                const response = await fetch('/uploadPhoto', {
+                    method: 'POST',
+                    body: formData
+                });
+                if (response.ok) {
+                    alert('Foto subida exitosamente.');
+                    document.getElementById('viewPhotoButton').style.display = 'block';
+                } else {
+                    alert('Error al subir la foto.');
+                }
+            } catch (error) {
+                alert('Error al subir la foto.');
+            }
         }
     </script>
 </body>
