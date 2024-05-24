@@ -151,16 +151,65 @@
                 </div>
                 <div class="tab-pane fade" id="section2" role="tabpanel" aria-labelledby="section2-tab">
                     <!-- Contenido de la Sección 2 -->
-                    <form id="formSection2">
-                        <!-- Campos de la Sección 2 -->
+                    <form id="formSection2" onsubmit="return addStudy(event)">
                         <div class="mb-3">
-                            <label for="document" class="form-label">Documento</label>
-                            <input type="file" class="form-control" id="document" required>
+                            <label for="studyType" class="form-label">Tipo de Estudio</label>
+                            <select class="form-select" id="studyType" name="studyType" required onchange="toggleDocumentUpload()">
+                                <option value="">Seleccione una opción</option>
+                                <option value="Primario">Primario</option>
+                                <option value="Secundario">Secundario</option>
+                                <option value="Diversificado">Diversificado</option>
+                                <option value="Universitario">Universitario</option>
+                            </select>
                         </div>
-                        <!-- Otros campos -->
-                        <button type="button" class="btn btn-secondary" onclick="prevTab(1)">Anterior</button>
-                        <button type="button" class="btn btn-primary" onclick="nextTab(3)">Siguiente</button>
+                        <div class="mb-3">
+                            <label for="startYear" class="form-label">Año de Inicio</label>
+                            <input type="number" class="form-control" id="startYear" name="startYear" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="endYear" class="form-label">Año de Fin</label>
+                            <input type="number" class="form-control" id="endYear" name="endYear" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="institution" class="form-label">Establecimiento</label>
+                            <input type="text" class="form-control" id="institution" name="institution" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="degree" class="form-label">Título o Diploma Obtenido</label>
+                            <input type="text" class="form-control" id="degree" name="degree" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="completed" class="form-label">Finalizado</label>
+                            <select class="form-select" id="completed" name="completed" required>
+                                <option value="Sí">Sí</option>
+                                <option value="No">No</option>
+                            </select>
+                        </div>
+                        <div class="mb-3" id="documentUpload" style="display: none;">
+                            <label for="document" class="form-label">Documento (.pdf)</label>
+                            <input type="file" class="form-control" id="document" name="document" accept=".pdf">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Agregar</button>
                     </form>
+                    <table class="table mt-3">
+                        <thead>
+                            <tr>
+                                <th>Tipo de Estudio</th>
+                                <th>Año de Inicio</th>
+                                <th>Año de Fin</th>
+                                <th>Establecimiento</th>
+                                <th>Título o Diploma</th>
+                                <th>Finalizado</th>
+                                <th>Documento</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="studiesTable">
+                            <!-- Fila de ejemplo -->
+                        </tbody>
+                    </table>
+                    <button type="button" class="btn btn-secondary" onclick="prevTab(1)">Anterior</button>
+                    <button type="button" class="btn btn-primary" onclick="nextTab(3)">Siguiente</button>
                 </div>
                 <div class="tab-pane fade" id="section3" role="tabpanel" aria-labelledby="section3-tab">
                     <!-- Contenido de la Sección 3 -->
@@ -243,6 +292,51 @@
             } catch (error) {
                 alert('Error al subir la foto.');
             }
+        }
+
+        // Funciones para la sección 2
+        function toggleDocumentUpload() {
+            const studyType = document.getElementById('studyType').value;
+            const documentUpload = document.getElementById('documentUpload');
+            if (studyType === 'Universitario') {
+                documentUpload.style.display = 'block';
+            } else {
+                documentUpload.style.display = 'none';
+            }
+        }
+
+        function addStudy(event) {
+            event.preventDefault();
+            const studyType = document.getElementById('studyType').value;
+            const startYear = document.getElementById('startYear').value;
+            const endYear = document.getElementById('endYear').value;
+            const institution = document.getElementById('institution').value;
+            const degree = document.getElementById('degree').value;
+            const completed = document.getElementById('completed').value;
+            const document = document.getElementById('document').files[0];
+
+            const studiesTable = document.getElementById('studiesTable');
+            const newRow = document.createElement('tr');
+            newRow.innerHTML = `
+                <td>${studyType}</td>
+                <td>${startYear}</td>
+                <td>${endYear}</td>
+                <td>${institution}</td>
+                <td>${degree}</td>
+                <td>${completed}</td>
+                <td>${document ? document.name : ''}</td>
+                <td><button type="button" class="btn btn-danger btn-sm" onclick="removeStudy(this)">Eliminar</button></td>
+            `;
+            studiesTable.appendChild(newRow);
+
+            // Limpiar el formulario
+            document.getElementById('formSection2').reset();
+            toggleDocumentUpload();
+        }
+
+        function removeStudy(button) {
+            const row = button.parentNode.parentNode;
+            row.parentNode.removeChild(row);
         }
     </script>
 </body>
