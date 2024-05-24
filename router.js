@@ -108,7 +108,7 @@ const storageEstudios = multer.diskStorage({
 const uploadEstudios = multer({ storage: storageEstudios });
 
 // Ruta para manejar la carga de fotos
-router.post('/uploadEstudios', uploadEstudios.single('document'), (req, res) => {
+router.post('/uploadEstudios', uploadEstudios.single('estudios'), (req, res) => {
     if (req.file) {
         res.send('Documento subido exitosamente');
     } else {

@@ -185,10 +185,16 @@
                                 <option value="No">No</option>
                             </select>
                         </div>
-                        <div class="mb-3" id="documentUpload" style="display: none;">
-                            <label for="document" class="form-label">Documento (.pdf)</label>
-                            <input type="file" class="form-control" id="document" name="document" accept=".pdf">
-                        </div>
+                        <form id="documentUploadForm" action="/uploadEstudios" method="POST" enctype="multipart/form-data" onsubmit="return uploadEstudios(event)">                    
+                            <input type="hidden" id="cui" name="cui" value="<%= userName[0].dpi %>">
+                            <!-- Botón para adjuntar foto -->
+                            <div class="mb-3">
+                                <label for="document" class="form-label">Documento (.pdf)</label>
+                                <input type="file" class="form-control" id="estudios" name="estudios" accept=".pdf" onchange="handleEstudiosUpload()">
+                                <button type="submit" class="btn btn-primary mt-2" id="uploadEstudiosButton" style="display: none;">Subir Documento</button>                        
+                                <button type="button" class="btn btn-secondary mt-2" id="viewEstudiosButton" style="display: none;" onclick="viewEstudios()">Ver Documento</button>
+                            </div>                  
+                        </form>
                         <button type="submit" class="btn btn-primary" onclick="addStudy(event)">Agregar</button>
                     </form>
                     <table class="table mt-3">
@@ -338,6 +344,48 @@
         function removeStudy(button) {
             const row = button.parentNode.parentNode;
             row.parentNode.removeChild(row);
+        }
+
+        async function uploadEstudios(event) {
+            event.preventDefault();
+            const form = document.getElementById('documentUploadForm');
+            const formData = new FormData(form);
+            try {
+                const response = await fetch('/uploadEstudios', {
+                    method: 'POST',
+                    body: formData
+                });
+                if (response.ok) {
+                    alert('Documento subido exitosamente.');
+                    document.getElementById('viewEstudiosButton').style.display = 'block';
+                } else {
+                    alert('Error al subir la foto.');
+                }
+            } catch (error) {
+                alert('Error al subir la foto.');
+            }
+        }
+
+        function handleEstudiosUpload() {
+            const estudiosInput = document.getElementById('estudios');
+            const uploadEstudiosButton = document.getElementById('uploadEstudiosButton');
+            const viewEstudiosButton = document.getElementById('viewEstudiosButton');
+            if (estudiosInput.files.length > 0) {
+                uploadEstudiosButton.style.display = 'block';
+                viewEstudiosButton.style.display = 'block';
+            } else {
+                uploadEstudiosButton.style.display = 'none';
+                viewEstudiosButton.style.display = 'none';
+            }
+        }
+
+        function viewEstudios() {
+            const estudiosInput = document.getElementById('estudios');
+            const file = estudiosInput.files[0];
+            if (file) {
+                const url = URL.createObjectURL(file);
+                window.open(url, '_blank');
+            }
         }
     </script>
 </body>
