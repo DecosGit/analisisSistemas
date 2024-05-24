@@ -79,7 +79,7 @@ const storage = multer.diskStorage({
     },
     filename: (req, file, cb) => {
         const dpi = req.body.cui; // Obtener el DPI del cuerpo de la solicitud
-        cb(null, `${dpi}-FotoCv.jpg`); // Renombrar el archivo con el DPI
+        cb(null, `${dpi}.jpg`); // Renombrar el archivo con el DPI
     }
 });
 

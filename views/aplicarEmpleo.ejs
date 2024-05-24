@@ -152,15 +152,43 @@
                 <div class="tab-pane fade" id="section2" role="tabpanel" aria-labelledby="section2-tab">
                     <!-- Contenido de la Sección 2 -->
                     <form id="formSection2">
-                        <!-- Campos de la Sección 2 -->
                         <div class="mb-3">
-                            <label for="document" class="form-label">Documento</label>
-                            <input type="file" class="form-control" id="document" required>
+                            <label for="studyType" class="form-label">Tipo de Estudio</label>
+                            <select class="form-select" id="studyType" name="studyType" onchange="updateStudyForm()" required>
+                                <option value="">Seleccione una opción</option>
+                                <option value="primario">Primario</option>
+                                <option value="secundario">Secundario</option>
+                                <option value="diversificado">Diversificado</option>
+                                <option value="universitario">Universitario</option>
+                            </select>
                         </div>
-                        <!-- Otros campos -->
-                        <button type="button" class="btn btn-secondary" onclick="prevTab(1)">Anterior</button>
-                        <button type="button" class="btn btn-primary" onclick="nextTab(3)">Siguiente</button>
+    
+                        <div id="studyFields">
+                            <!-- Campos específicos de estudio se generarán dinámicamente aquí -->
+                        </div>
+    
+                        <button type="button" class="btn btn-primary" onclick="addStudy()">Agregar Estudio</button>
                     </form>
+    
+                    <table class="table mt-3" id="studiesTable">
+                        <thead>
+                            <tr>
+                                <th>Tipo</th>
+                                <th>Año Inicio</th>
+                                <th>Año Fin</th>
+                                <th>Establecimiento</th>
+                                <th>Título/Diploma</th>
+                                <th>Documento</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Las filas de estudios agregados se generarán dinámicamente aquí -->
+                        </tbody>
+                    </table>
+    
+                    <button type="button" class="btn btn-secondary" onclick="prevTab(1)">Anterior</button>
+                    <button type="button" class="btn btn-primary" onclick="nextTab(3)">Siguiente</button>
                 </div>
                 <div class="tab-pane fade" id="section3" role="tabpanel" aria-labelledby="section3-tab">
                     <!-- Contenido de la Sección 3 -->
@@ -181,7 +209,11 @@
 
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"></script>
     <script>
+        let studies = [];
+
         function nextTab(tabIndex) {
             var nextTab = document.querySelector('#myTab button[data-bs-target="#section' + tabIndex + '"]');
             var tab = new bootstrap.Tab(nextTab);
@@ -194,55 +226,97 @@
             tab.show();
         }
 
-        function handlePhotoUpload() {
-            const photoInput = document.getElementById('photo');
-            const uploadPhotoButton = document.getElementById('uploadPhotoButton');
-            const viewPhotoButton = document.getElementById('viewPhotoButton');
-            if (photoInput.files.length > 0) {
-                uploadPhotoButton.style.display = 'block';
-                viewPhotoButton.style.display = 'block';
-            } else {
-                uploadPhotoButton.style.display = 'none';
-                viewPhotoButton.style.display = 'none';
-            }
-        }
+        function updateStudyForm() {
+            const studyType = document.getElementById('studyType').value;
+            const studyFields = document.getElementById('studyFields');
+            studyFields.innerHTML = '';
 
-        function viewPhoto() {
-            const photoInput = document.getElementById('photo');
-            const file = photoInput.files[0];
-            if (file) {
-                const url = URL.createObjectURL(file);
-                window.open(url, '_blank');
-            }
-        }
+            if (studyType) {
+                let fieldsHTML = `
+                    <div class="mb-3">
+                        <label for="startYear" class="form-label">Año Inicio</label>
+                        <input type="number" class="form-control" id="startYear" name="startYear" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="endYear" class="form-label">Año Fin</label>
+                        <input type="number" class="form-control" id="endYear" name="endYear" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="establishment" class="form-label">Establecimiento</label>
+                        <input type="text" class="form-control" id="establishment" name="establishment" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="degree" class="form-label">Título/Diploma Obtenido</label>
+                        <input type="text" class="form-control" id="degree" name="degree" required>
+                    </div>
+                `;
 
-        function validatePhotoUpload() {
-            const photoInput = document.getElementById('photo');
-            if (photoInput.files.length === 0) {
-                alert('Por favor, seleccione una foto para subir.');
-                return false;
-            }
-            return true;
-        }
-
-        async function uploadPhoto(event) {
-            event.preventDefault();
-            const form = document.getElementById('photoUploadForm');
-            const formData = new FormData(form);
-            try {
-                const response = await fetch('/uploadPhoto', {
-                    method: 'POST',
-                    body: formData
-                });
-                if (response.ok) {
-                    alert('Foto subida exitosamente.');
-                    document.getElementById('viewPhotoButton').style.display = 'block';
-                } else {
-                    alert('Error al subir la foto.');
+                if (studyType === 'universitario') {
+                    fieldsHTML += `
+                        <div class="mb-3 form-check">
+                            <input type="checkbox" class="form-check-input" id="isCompleted" name="isCompleted">
+                            <label for="isCompleted" class="form-check-label">¿Finalizado?</label>
+                        </div>
+                    `;
                 }
-            } catch (error) {
-                alert('Error al subir la foto.');
+
+                studyFields.innerHTML = fieldsHTML;
             }
+        }
+
+        function addStudy() {
+            const studyType = document.getElementById('studyType').value;
+            const startYear = document.getElementById('startYear').value;
+            const endYear = document.getElementById('endYear').value;
+            const establishment = document.getElementById('establishment').value;
+            const degree = document.getElementById('degree').value;
+            const isCompleted = studyType === 'universitario' ? document.getElementById('isCompleted').checked : null;
+
+            const study = {
+                type: studyType,
+                startYear: startYear,
+                endYear: endYear,
+                establishment: establishment,
+                degree: degree,
+                isCompleted: isCompleted,
+                document: null
+            };
+
+            studies.push(study);
+            updateStudiesTable();
+        }
+
+        function updateStudiesTable() {
+            const studiesTableBody = document.querySelector('#studiesTable tbody');
+            studiesTableBody.innerHTML = '';
+
+            studies.forEach((study, index) => {
+                const row = document.createElement('tr');
+
+                row.innerHTML = `
+                    <td>${study.type}</td>
+                    <td>${study.startYear}</td>
+                    <td>${study.endYear}</td>
+                    <td>${study.establishment}</td>
+                    <td>${study.degree}</td>
+                    <td>${study.type === 'universitario' ? `<input type="file" onchange="handleDocumentUpload(${index}, this)" required>` : ''}</td>
+                    <td><button class="btn btn-danger" onclick="removeStudy(${index})">Eliminar</button></td>
+                `;
+
+                studiesTableBody.appendChild(row);
+            });
+        }
+
+        function handleDocumentUpload(index, input) {
+            const file = input.files[0];
+            if (file) {
+                studies[index].document = file;
+            }
+        }
+
+        function removeStudy(index) {
+            studies.splice(index, 1);
+            updateStudiesTable();
         }
     </script>
 </body>
