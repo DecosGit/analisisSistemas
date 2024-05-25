@@ -135,8 +135,7 @@
                                 <option value="masculino">Masculino</option>
                                 <option value="femenino">Femenino</option>
                             </select>
-                        </div>
-
+                        </div>                        
                         <button type="button" class="btn btn-primary" onclick="nextTab(2)">Siguiente</button>
                     </form>
                 </div>
@@ -214,6 +213,7 @@
                             <button type="button" class="btn btn-secondary mt-2" id="viewOtrosButton" style="display: none;" onclick="viewOtros()">Ver Documento</button>
                         </div>
                     </form>
+                    <button type="button" class="btn btn-secondary" onclick="prevTab(1)">Anterior</button>
                     <button type="button" class="btn btn-primary" onclick="nextTab(3)">Siguiente</button>
                 </div>
                 <div class="tab-pane fade" id="section3" role="tabpanel" aria-labelledby="section3-tab">
@@ -253,8 +253,8 @@
                                 <option value="no">No</option>
                             </select>
                         </div>
-                        <button type="button" class="btn btn-primary" onclick="addStudy()">Agregar Estudio</button>
-                    </form>
+                        <button type="button" class="btn btn-primary" onclick="addStudy()">Agregar Estudio</button>                            
+                    </form>                
                     <table class="table mt-4">
                         <thead>
                             <tr>
@@ -270,6 +270,8 @@
                         <tbody id="studiesTableBody">
                         </tbody>
                     </table>
+                    <button type="button" class="btn btn-secondary" onclick="prevTab(2)">Anterior</button>
+                    <button type="submit" class="btn btn-success" id="botonEnviar" name="botonEnviar" style="display: none;">Enviar</button>
                 </div>
             <% } %>
         </div>
@@ -278,9 +280,15 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        // Función para mover a la siguiente pestaña
         function nextTab(tabIndex) {
-            const tab = new bootstrap.Tab(document.querySelector(`#myTab button:nth-child(${tabIndex})`));
+            var nextTab = document.querySelector('#myTab button[data-bs-target="#section' + tabIndex + '"]');
+            var tab = new bootstrap.Tab(nextTab);
+            tab.show();
+        }
+
+        function prevTab(tabIndex) {
+            var prevTab = document.querySelector('#myTab button[data-bs-target="#section' + tabIndex + '"]');
+            var tab = new bootstrap.Tab(prevTab);
             tab.show();
         }
 
@@ -589,11 +597,11 @@
 
         document.getElementById('studyType').addEventListener('change', function() {
             const studyType = this.value;
-            const documentUpload = document.getElementById('universityDocumentUpload');
+            const botonEnviar = document.getElementById('botonEnviar');
             if (studyType === 'universitario') {
-                documentUpload.style.display = 'block';
+                botonEnviar.style.display = 'block';
             } else {
-                documentUpload.style.display = 'none';
+                botonEnviar.style.display = 'none';
             }
         });
     </script>
