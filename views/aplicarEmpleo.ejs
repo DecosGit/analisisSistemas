@@ -270,8 +270,10 @@
                         <tbody id="studiesTableBody">
                         </tbody>
                     </table>
+                    <input type="hidden" id="idUsuario" name="idUsuario" value="<%= userName[0].id %>">
+                    <input type="hidden" id="idEmpleo" name="idEmpleo" value="<%= idEmpleo %>">
                     <button type="button" class="btn btn-secondary" onclick="prevTab(2)">Anterior</button>
-                    <button type="submit" class="btn btn-success" id="botonEnviar" name="botonEnviar" style="display: none;">Enviar</button>
+                    <button type="button" class="btn btn-success" id="botonEnviar" name="botonEnviar" style="display: none;" onclick="submitForms()">Enviar</button>
                 </div>
             <% } %>
         </div>
@@ -587,7 +589,11 @@
 
             // Limpiar el formulario
             document.getElementById('studiesForm').reset();
-            document.getElementById('universityDocumentUpload').style.display = 'none';
+            if (studyType === 'universitario') {
+                botonEnviar.style.display = 'block';
+            } else {
+                botonEnviar.style.display = 'none';
+            }
         }
 
         function removeStudy(button) {
@@ -595,15 +601,62 @@
             row.remove();
         }
 
-        document.getElementById('studyType').addEventListener('change', function() {
-            const studyType = this.value;
-            const botonEnviar = document.getElementById('botonEnviar');
-            if (studyType === 'universitario') {
-                botonEnviar.style.display = 'block';
-            } else {
-                botonEnviar.style.display = 'none';
+        function gatherFormData(section) {
+    const inputs = section.querySelectorAll('input, select, textarea');
+    const formData = new FormData();
+    inputs.forEach(input => {
+        if (input.type === 'file') {
+            if (input.files.length > 0) {
+                formData.append(input.name, input.files[0]);
             }
-        });
+        } else {
+            formData.append(input.name, input.value);
+        }
+    });
+    return formData;
+}
+
+function submitForms() {
+    const section1 = document.getElementById('section1');
+    const section2 = document.getElementById('section2');
+    const section3 = document.getElementById('section3');
+
+    if (!section1 || !section2 || !section3) {
+        console.error('One or more sections are missing.');
+        return;
+    }
+
+    const formData = new FormData();
+
+    const section1Data = gatherFormData(section1);
+    const section2Data = gatherFormData(section2);
+    const section3Data = gatherFormData(section3);
+
+    section1Data.forEach((value, key) => {
+        formData.append(key, value);
+    });
+    section2Data.forEach((value, key) => {
+        formData.append(key, value);
+    });
+    section3Data.forEach((value, key) => {
+        formData.append(key, value);
+    });
+
+    fetch('/crearSolicitud', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log('Success:', data);
+        // Aquí puedes redirigir o mostrar un mensaje de éxito
+    })
+    .catch((error) => {
+        console.error('Error:', error);
+        // Aquí puedes manejar el error
+    });
+}
+
     </script>
 </body>
 

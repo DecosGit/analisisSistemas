@@ -6,6 +6,7 @@ const path = require('path');
 const userController = require('./controller/userData')
 const empleoController = require('./controller/empleoController')
 const usernameGlobal = require('./controller/userGlobal')
+const solicitudController = require('./controller/solicitudController')
 
 router.get('/', (req, res) => {
 
@@ -271,5 +272,7 @@ router.post('/uploadRtu', uploadRtu.single('documentRtu'), (req, res) => {
         res.send('Error al subir el documento');
     }
 });
+
+router.post('/crearSolicitud', solicitudController.crearSolicitud)
 
 module.exports = router;
