@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Eliminar Empleo</title>
+    <title>Editar Empleo</title>
     <!-- Enlace a Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
@@ -58,31 +58,39 @@
         const fechaVencimientoConvertida = anio + "-" + mes + "-" + dia;
         console.log(fechaVencimientoConvertida);
           %> 
-    <form class="container-fluid mt-5 ml-5 mr-5" action="/editarEmpleo" method="post">
-        <input type="hidden" id="datos" name="datos" value="<%= data[0].id %>">
-        <div class="mb-3 mt-5">
-            <label for="puesto" class="form-label mt-5">Titulo Perfil:</label>
-            <input type="text" class="form-control" id="puesto" name="puesto"
-                placeholder="Ingrese el nombre del puesto" required value="<%= data[0].nombre %>">
+          <div class="mb-3 mt-5">
+              <label for="puesto" class="form-label mt-5">Titulo Perfil:</label>
+            <span class="form-label">
+                <%= data[0].nombre %>
+            </span>
         </div>
         <div class="mb-3">
             <label for="descripcion" class="form-label">Descripción:</label>
-            <input type="text" class="form-control" id="descripcion" name="descripcion"
-                placeholder="Describa el puesto" required value="<%= data[0].descripcion %>">
+            <span class="form-label">
+                <%= data[0].descripcion %>
+            </span>
         </div>
         <div class="mb-3">
             <label for="sueldo" class="form-label">Sueldo:</label>
-            <input type="text" class="form-control" id="sueldo" name="sueldo" 
-                placeholder="Ingrese el sueldo asignado" required value="<%= data[0].sueldo %>">
+            <span class="form-label">
+                <%= data[0].sueldo %>
+            </span>
         </div>
         <div class="mb-3">
             <label for="fecha" class="form-label">Fecha de vencimiento:</label>
-            <input type="date" class="form-control" id="fecha" name="fecha" required value="<%= fechaVencimientoConvertida %>">
+            <span class="form-label">
+                <%= fechaVencimientoConvertida %>
+            </span>
         </div>
-        <button class="btn btn-outline-danger" type="submit">Eliminar Empleo</button>
-    </form>
-    <% } %>
-
-</body>
+        <form action="/aceptarCV" method="post" class="form-control">
+            <input type="hidden" id="datos" name="datos" value="<%= data[0].id %>">
+            <button class="btn btn-outline-success" type="submit">Aceptar</button>
+        </form>
+        <form action="/rechazarCV" method="post" class="form-control"></form>
+        <input type="hidden" id="datos" name="datos" value="<%= data[0].id %>">
+        <button class="btn btn-outline-danger" type="submit">Rechazar</button>
+        <% } %>
+        
+    </body>
 
 </html>

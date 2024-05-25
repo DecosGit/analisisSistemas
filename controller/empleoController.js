@@ -253,3 +253,60 @@ exports.aplicarEmpleo = async (req, res) => {
     }
 
 }
+
+exports.findApplicationJob = async (req, res) => {
+
+    try {
+        const conexion = bd()
+        conexion.query('select * from empleos where estado = 1', (error, results) => {
+            if (error) {
+                console.error('Error al ejecutar la consulta:', error);
+                res.status(500).json({ error: 'Error al ejecutar la consulta' });
+                return;
+            }
+            if (results.length > 0) {
+                // Si se encontraron datos, renderizar el dashboard con los datos del usuario
+                const userData = usernameGlobal.getUserGlobal();
+                return res.render('listadoProcesos', { data: results, username: userData });
+            } else {
+                // Si no se encontraron datos, renderizar la página de login con un mensaje de error
+                return res.render('listadoProcesos', { data: null, alertMessage: 'Usuario no encontrado' });
+            }
+        })
+    } catch (error) {
+        console.error(error)
+        // Si hay un error, envía una alerta y permanece en la misma página
+        res.render('login', { alertMessage: 'Error interno del servidor. Inténtalo de nuevo más tarde.' });
+    }
+
+}
+
+exports.findCV = async (req, res) => {
+    try {
+        const userData = usernameGlobal.getUserGlobal();
+
+        let idEmpleo = req.body.empleo
+
+        const conexion = bd()
+        conexion.query('select * from empleos where estado = 1 AND id = ?',
+            [idEmpleo], (error, results) => {
+                if (error) {
+                    console.error('Error al ejecutar la consulta:', error);
+                    res.status(500).json({ error: 'Error al ejecutar la consulta' });
+                    return;
+                }
+                if (results.length > 0) {
+                    // Si se encontraron datos, renderizar el dashboard con los datos del usuario
+                    return res.render('listadoAplicaciones', { data: results, username: userData });
+                } else {
+                    // Si no se encontraron datos, renderizar la página de login con un mensaje de error
+                    return res.render('listadoAplicaciones', { data: null, alertMessage: 'No hay aplicaciones actualmente' });
+                }
+            })
+
+    } catch (error) {
+        console.error(error)
+        // Si hay un error, envía una alerta y permanece en la misma página
+        res.render('listadoProcesos', { alertMessage: 'Error interno del servidor. Inténtalo de nuevo más tarde.' });
+    }
+}

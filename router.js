@@ -94,4 +94,9 @@ router.post('/uploadPhoto', upload.single('photo'), (req, res) => {
     }
 });
 
+// Ruta para listado de procesos, para aceptar o rechazar candidatos
+router.get('/listadoProcesos', empleoController.findApplicationJob)
+
+router.post('/listarCV', empleoController.findCV)
+
 module.exports = router;
