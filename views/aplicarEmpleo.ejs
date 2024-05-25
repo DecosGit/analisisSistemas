@@ -38,7 +38,7 @@
                 <div class="tab-pane fade show active" id="section1" role="tabpanel" aria-labelledby="section1-tab">
                     <!-- Contenido de la Sección 1 -->
                     <form id="photoUploadForm" enctype="multipart/form-data" onsubmit="return uploadPhoto(event)">
-                        <input type="hidden" id="cui" name="cui" value="<%= userName[0].dpi %>">
+                        <input type="hidden" id="cui" name="cui" value="<%= userName[0].dpi %>">                        
                         <!-- Botón para adjuntar foto -->
                         <div class="mb-3">
                             <label for="photo" class="form-label">Foto (formato jpg)</label>
@@ -206,6 +206,8 @@
                     </form>
                     <form id="otrosUploadForm" enctype="multipart/form-data" onsubmit="return uploadOtros(event)">
                         <input type="hidden" id="cui" name="cui" value="<%= userName[0].dpi %>">
+                        <input type="hidden" id="idUsuario" name="idUsuario" value="<%= userName[0].id %>">
+                        <input type="hidden" id="idEmpleo" name="idEmpleo" value="<%= idEmpleo %>">
                         <div class="mb-3">
                             <label for="documentOtros" class="form-label">Otros (formato pdf)</label>
                             <input type="file" class="form-control" id="documentOtros" name="documentOtros" accept="application/pdf" required onchange="handleOtrosUpload()">
@@ -270,8 +272,6 @@
                         <tbody id="studiesTableBody">
                         </tbody>
                     </table>
-                    <input type="hidden" id="idUsuario" name="idUsuario" value="<%= userName[0].id %>">
-                    <input type="hidden" id="idEmpleo" name="idEmpleo" value="<%= idEmpleo %>">
                     <button type="button" class="btn btn-secondary" onclick="prevTab(2)">Anterior</button>
                     <button type="button" class="btn btn-success" id="botonEnviar" name="botonEnviar" style="display: none;" onclick="submitForms()">Enviar</button>
                 </div>
@@ -601,46 +601,35 @@
             row.remove();
         }
 
-        function gatherFormData(section) {
-    const inputs = section.querySelectorAll('input, select, textarea');
+        function submitForms() {
     const formData = new FormData();
-    inputs.forEach(input => {
-        if (input.type === 'file') {
-            if (input.files.length > 0) {
-                formData.append(input.name, input.files[0]);
-            }
-        } else {
-            formData.append(input.name, input.value);
-        }
-    });
-    return formData;
-}
+    
+    const idEmpleo = document.getElementById('idEmpleo').value;
+    const idUsuario = document.getElementById('idUsuario').value;
+    const fechaNacimiento = document.getElementById('dob').value;
+    const estadoCivil = document.getElementById('maritalStatus').value;
+    const direccionResidencia = document.getElementById('residenceAddress').value;
+    const direccionNotificaciones = document.getElementById('notificationAddress').value;
+    const telefonos = document.getElementById('phoneNumbers').value;
+    const nacionalidad = document.getElementById('nationality').value;
+    const profesion = document.getElementById('profession').value;
+    const nit = document.getElementById('nit').value;
+    const sexo = document.getElementById('sex').value;
+    const cui = document.getElementById('cui').value;
 
-function submitForms() {
-    const section1 = document.getElementById('section1');
-    const section2 = document.getElementById('section2');
-    const section3 = document.getElementById('section3');
-
-    if (!section1 || !section2 || !section3) {
-        console.error('One or more sections are missing.');
-        return;
-    }
-
-    const formData = new FormData();
-
-    const section1Data = gatherFormData(section1);
-    const section2Data = gatherFormData(section2);
-    const section3Data = gatherFormData(section3);
-
-    section1Data.forEach((value, key) => {
-        formData.append(key, value);
-    });
-    section2Data.forEach((value, key) => {
-        formData.append(key, value);
-    });
-    section3Data.forEach((value, key) => {
-        formData.append(key, value);
-    });
+    // Agregar los valores al FormData
+    formData.append('idEmpleo', idEmpleo);
+    formData.append('idUsuario', idUsuario);
+    formData.append('fechaNacimiento', fechaNacimiento);
+    formData.append('estadoCivil', estadoCivil);
+    formData.append('direccionResidencia', direccionResidencia);
+    formData.append('direccionNotificaciones', direccionNotificaciones);
+    formData.append('telefonos', telefonos);
+    formData.append('nacionalidad', nacionalidad);
+    formData.append('profesion', profesion);
+    formData.append('nit', nit);
+    formData.append('sexo', sexo);
+    formData.append('cui', cui);
 
     fetch('/crearSolicitud', {
         method: 'POST',
