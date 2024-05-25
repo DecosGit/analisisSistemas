@@ -324,14 +324,15 @@
                                     class="card-footer bg-transparent border-success d-flex justify-content-center align-items-center">
                                     <% if (username && username !== null){ let userName = JSON.parse(username) %>  
                                         <form action="/opcionAplicarEmpleo" method="post">
-                                            <input type="hidden">
+                                            <input type="hidden" id="datosEdit" name="datosEdit" value="<%= item.id %>" >
+                                            <input type="hidden" id="datosEditNombre" name="datosEditNombre" value="<%= item.nombre %>" >
                                             <button class="btn btn-outline-success" type="submit">Aplicar</button>
                                         </form>
                                     <% } %>
                                     
                                     <% if(username && username !== null){ let userName = JSON.parse(username); if(userName[0].rol == 'Admin'){  %>                                        
                                         <form action="/opcionEditarEmpleo" method="post">
-                                            <input type="hidden" id="datosEdit" name="datosEdit" value="<%= item.id %>" >
+                                            <input type="hidden" id="datosEdit" name="datosEdit" value="<%= item.id %>" >                                            
                                             <button class="btn btn-outline-primary" type="submit">Editar</button>
                                         </form>
                                         <form action="/opcionEliminarEmpleo" method="post">
