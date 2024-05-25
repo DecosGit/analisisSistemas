@@ -61,7 +61,9 @@ router.post('/crearEmpleo', empleoController.createJob)
 router.post('/opcionEditarEmpleo', empleoController.findEditJob)
 
 router.post('/opcionAplicarEmpleo', (req, res) => {
-    res.render('aplicarEmpleo', { username: usernameGlobal.getUserGlobal() });
+    let idEmpleo = req.body.datosEdit
+    let nombreEmpleo = req.body.datosEditNombre
+    res.render('aplicarEmpleo', { username: usernameGlobal.getUserGlobal(), idEmpleo: idEmpleo, nombreEmpleo: nombreEmpleo });
 })
 
 router.get('/noticias', (req, res) => {
