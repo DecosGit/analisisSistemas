@@ -10,11 +10,9 @@
 
     <!-- Enlace a Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
-
 </head>
 
 <body>
-
     <!-- Barra de navegación -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
         <div class="container-fluid">
@@ -30,7 +28,8 @@
                         <a class="nav-link active" aria-current="page" href="/empleo">EMPLEOS</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="/adminUsuarios">ADMINISTRACIÓN DE USUARIOS</a>
+                        <a class="nav-link active" aria-current="page" href="/adminUsuarios">ADMINISTRACIÓN DE
+                            USUARIOS</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/listadoProcesos">PROCESOS</a>
@@ -40,28 +39,22 @@
                     </li>
                 </ul>
             </div>
-            <% if (username && username.length > 0){ let userName = JSON.parse(username) %>  
-                <span><%= userName[0].nombre %></span>
-            <% } %>
+            <% if (username && username.length> 0) {
+                let userName = JSON.parse(username); %>
+                <span>
+                    <%= userName[0].nombre %>
+                </span>
+                <% } %>
         </div>
     </nav>
 
-    <% if(data && data.length){      
-        // Crear un objeto Date a partir de la fecha original
-        const fecha = new Date(data[0].fecha_vencimiento);
-        
-        // Extraer día, mes y año
-        const dia = fecha.getDate().toString().padStart(2, '0');
-        const mes = (fecha.getMonth() + 1).toString().padStart(2, '0');
-        const anio = fecha.getFullYear();
-        // Reorganiza los componentes para formar el formato DD-MM-YYYY
-        const fechaVencimientoConvertida = anio + "-" + mes + "-" + dia;
-        console.log(fechaVencimientoConvertida);
-          %> 
-          <div class="mb-3 mt-5">
-              <label for="puesto" class="form-label mt-5">Titulo Perfil:</label>
+    <% if(data && data.length) { const fecha=new Date(data[0].fecha_vencimiento); const
+        dia=fecha.getDate().toString().padStart(2, '0' ); const mes=(fecha.getMonth() + 1).toString().padStart(2, '0' );
+        const anio=fecha.getFullYear(); const fechaVencimientoConvertida=anio + "-" + mes + "-" + dia; %>
+        <div class="mb-3 mt-5">
+            <label for="puesto" class="form-label mt-5">Titulo Perfil:</label>
             <span class="form-label">
-                <%= data[0].nombre %>
+                <%= data[0].nombreEmpleo %>
             </span>
         </div>
         <div class="mb-3">
@@ -82,15 +75,56 @@
                 <%= fechaVencimientoConvertida %>
             </span>
         </div>
-        <form action="/aceptarCV" method="post" class="form-control">
-            <input type="hidden" id="datos" name="datos" value="<%= data[0].id %>">
-            <button class="btn btn-outline-success" type="submit">Aceptar</button>
-        </form>
-        <form action="/rechazarCV" method="post" class="form-control"></form>
-        <input type="hidden" id="datos" name="datos" value="<%= data[0].id %>">
-        <button class="btn btn-outline-danger" type="submit">Rechazar</button>
+        <section class="container-fluid">
+            <ul>
+                <% data.forEach((elemento)=> { %>
+                    <li>
+                        <div>
+                            <span>Nombre: </span>
+                            <span>
+                                <%= elemento.nombre %>
+                            </span>
+                        </div>
+                        <div>
+                            <span>Apellido: </span>
+                            <span>
+                                <%= elemento.apellido %>
+                            </span>
+                        </div>
+                        <div>
+                            <span>Telefono: </span>
+                            <span>
+                                <%= elemento.telefonos %>
+                            </span>
+                        </div>
+                        <div>
+                            <span>Profesion: </span>
+                            <span>
+                                <%= elemento.profesion %>
+                            </span>
+                        </div>
+                        <div>
+                            <span>Foto: </span>
+                            <button type="button" class="btn btn-secondary mt-2" data-cui="<%= elemento.cui %>"
+                                onclick="viewPhoto(this)">Ver Foto</button>
+                        </div>
+                        <div>
+                            <button class="btn btn-outline-danger">Rechazar</button>
+                            <button class="btn btn-outline-success">Aceptar</button>
+                        </div>
+                    </li>
+                    <% }) %>
+            </ul>
+        </section>
         <% } %>
-        
-    </body>
+
+            <script>
+                // Función para ver la foto
+                function viewPhoto(button) {
+                    let cui = button.getAttribute('data-cui');
+                    window.open(`/resources/FotoCv/${cui}.jpg`, '_blank');
+                }
+            </script>
+</body>
 
 </html>

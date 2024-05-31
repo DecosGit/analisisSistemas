@@ -287,8 +287,14 @@ exports.findCV = async (req, res) => {
 
         let idEmpleo = req.body.empleo
 
+        let queryString = 'SELECT id_empleo, id_usuario, t1.estado, path_foto, telefonos, profesion, t2.nombre, apellido, correo_electronico, ' +
+        ' t3.nombre as nombreEmpleo, sueldo, descripcion, fecha_vencimiento, dpi as cui FROM ' +
+        ' (SELECT id_empleo, id_usuario, estado, path_foto, telefonos, profesion FROM `solicitud` WHERE id_empleo = ? ) as t1 ' +
+        ' Join (Select id, nombre, apellido, correo_electronico, dpi from `usuarios`) as t2 on  t1.id_usuario = t2.id ' +
+        ' Join ( Select id, nombre, sueldo, descripcion, fecha_vencimiento from `empleos` ) as t3 on t1.id_empleo = t3.id' 
+
         const conexion = bd()
-        conexion.query('select * from empleos where estado = 1 AND id = ?',
+        conexion.query(queryString,
             [idEmpleo], (error, results) => {
                 if (error) {
                     console.error('Error al ejecutar la consulta:', error);
