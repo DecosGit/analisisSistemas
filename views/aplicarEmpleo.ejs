@@ -601,54 +601,61 @@
             row.remove();
         }
 
-        function submitForms() {
-    const formData = new FormData();
-    
-    const idEmpleo = document.getElementById('idEmpleo').value;
-    const idUsuario = document.getElementById('idUsuario').value;
-    const fechaNacimiento = document.getElementById('dob').value;
-    const estadoCivil = document.getElementById('maritalStatus').value;
-    const direccionResidencia = document.getElementById('residenceAddress').value;
-    const direccionNotificaciones = document.getElementById('notificationAddress').value;
-    const telefonos = document.getElementById('phoneNumbers').value;
-    const nacionalidad = document.getElementById('nationality').value;
-    const profesion = document.getElementById('profession').value;
-    const nit = document.getElementById('nit').value;
-    const sexo = document.getElementById('sex').value;
-    const cui = document.getElementById('cui').value;
+        function gatherFormData(form) {
+        const formData = new FormData(form);
+        const data = {};
+        formData.forEach((value, key) => {
+            data[key] = value;
+        });
+        return data;
+    }
 
-    console.log(idEmpleo);
-    console.log(idUsuario);
+    function gatherFormData(section) {
+        const inputs = section.querySelectorAll('input, select, textarea');
+        const data = {};
+        inputs.forEach(input => {
+            data[input.name] = input.value;
+        });
+        return data;
+    }
 
-    // Agregar los valores al FormData
-    formData.append('idEmpleo', idEmpleo);
-    formData.append('idUsuario', idUsuario);
-    formData.append('fechaNacimiento', fechaNacimiento);
-    formData.append('estadoCivil', estadoCivil);
-    formData.append('direccionResidencia', direccionResidencia);
-    formData.append('direccionNotificaciones', direccionNotificaciones);
-    formData.append('telefonos', telefonos);
-    formData.append('nacionalidad', nacionalidad);
-    formData.append('profesion', profesion);
-    formData.append('nit', nit);
-    formData.append('sexo', sexo);
-    formData.append('cui', cui);
+    function submitForms() {
+        const section1 = document.getElementById('section1');
+        const section2 = document.getElementById('section2');
+        const section3 = document.getElementById('section3');
 
-    fetch('/crearSolicitud', {
-        method: 'POST',
-        body: formData
-    })
-    .then(response => response.json())
-    .then(data => {
-        console.log('Success:', data);
-        // Aquí puedes redirigir o mostrar un mensaje de éxito
-    })
-    .catch((error) => {
-        console.error('Error:', error);
-        // Aquí puedes manejar el error
-    });
-}
+        if (!section1 || !section2 || !section3) {
+            console.error('One or more sections are missing.');
+            return;
+        }
 
+        const section1Data = gatherFormData(section1);
+        const section2Data = gatherFormData(section2);
+        const section3Data = gatherFormData(section3);
+
+        const combinedData = {
+            ...section1Data,
+            ...section2Data,
+            ...section3Data
+        };
+
+        fetch('/crearSolicitud', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(combinedData)
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log('Success:', data);
+            // Aquí puedes redirigir o mostrar un mensaje de éxito
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+            // Aquí puedes manejar el error
+        });
+    }
     </script>
 </body>
 

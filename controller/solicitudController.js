@@ -4,34 +4,41 @@ const bd = require('../database/conexionSQL')
 const usernameGlobal = require('./userGlobal')
 const path = require('path');
 
-exports.crearSolicitud = async (req, res) => {
+exports.crearSolicitud = (req, res) => {
+    try
+    {
+        const solicitudData = req.body;
+        // Aquí puedes procesar solicitudData y hacer la inserción en la base de datos
+        // Asegúrate de manejar los archivos subidos también
+        console.log(solicitudData);
+        console.log("JSON CONVERTIDO")
 
-    try {
-        const empleo = req.body.idEmpleo;
-        const usuario = req.body.idUsuario; 
-        const estado = 1;        
-        const pathFoto = path.join(__dirname, `../resources/FotoCv/${req.body.cui}.jpg`);
-        const nacimiento = req.body.fechaNacimiento;
-        const estadoCiv = req.body.estadoCivil;
-        const direccionRes = req.body.direccionResidencia;
-        const direccionNot = req.body.direccionNotificaciones;
-        const tel = req.body.telefonos;
-        const naciona = req.body.nacionalidad;
-        const profe = req.body.profesion;
-        const nt = req.body.nit;
-        const sex = req.body.sexo;
-        const pathAntecedentesPenales = path.join(__dirname, `../resources/AntecedentesPenales/${req.body.cui}.pdf`);
-        const pathAntecedentesPoliciacos = path.join(__dirname, `../resources/AntecedentesPoliciacos/${req.body.cui}.pdf`);
-        const pathAutentica = path.join(__dirname, `../resources/Autentica/${req.body.cui}.pdf`);
-        const pathDeclaracionJurada = path.join(__dirname, `../resources/DeclaracionJurada/${req.body.cui}.pdf`);
-        const pathDpi = path.join(__dirname, `../resources/Dpi/${req.body.cui}.pdf`);
-        const pathRenas = path.join(__dirname, `../resources/Renas/${req.body.cui}.pdf`);
-        const pathRtu = path.join(__dirname, `../resources/Rtu/${req.body.cui}.pdf`);
-        const pathOtros = path.join(__dirname, `../resources/Otros/${req.body.cui}.pdf`);
-        
+        const idEmpleo = solicitudData.idEmpleo
+        const idUsuario = solicitudData.idUsuario
+        const dob = solicitudData.dob
+        const maritalStatus = solicitudData.maritalStatus
+        const residenceAddress = solicitudData.residenceAddress
+        const notificationAddress = solicitudData.notificationAddress
+        const phoneNumbers = solicitudData.phoneNumbers
+        const estado = 1    
+        const pathFoto = path.join(__dirname, `../resources/FotoCv/${solicitudData.cui}.jpg`)
+        const nationality = solicitudData.nationality
+        const profession = solicitudData.profession
+        const nit = solicitudData.nit
+        const sex = solicitudData.sex
+        const pathAntecedentesPenales = path.join(__dirname, `../resources/AntecedentesPenales/${solicitudData.cui}.pdf`);
+        const pathAntecedentesPoliciacos = path.join(__dirname, `../resources/AntecedentesPoliciacos/${solicitudData.cui}.pdf`);
+        const pathAutentica = path.join(__dirname, `../resources/Autentica/${solicitudData.cui}.pdf`);
+        const pathDeclaracionJurada = path.join(__dirname, `../resources/DeclaracionJurada/${solicitudData.cui}.pdf`);
+        const pathDpi = path.join(__dirname, `../resources/Dpi/${solicitudData.cui}.pdf`);
+        const pathRenas = path.join(__dirname, `../resources/Renas/${solicitudData.cui}.pdf`);
+        const pathRtu = path.join(__dirname, `../resources/Rtu/${solicitudData.cui}.pdf`);
+        const pathOtros = path.join(__dirname, `../resources/Otros/${solicitudData.cui}.pdf`);
+        res.send('Solicitud recibida')
+
         // Construir la consulta de inserción
         const insercion = 'INSERT INTO solicitud (id, id_empleo, id_usuario, estado, path_foto, fecha_nacimiento, estado_civil, direccion_residencia, direccion_notificaciones, telefonos, nacionalidad, profesion, nit, sexo, path_antecedente_penales, path_antecedentes_policiacos, path_declaracion, path_autentica, path_dpi, path_renas, path_rtu, path_otros, anio_inicio_primaria, anio_fin_primaria, establecimiento_primaria, titulo_primaria, finalizado_primaria, anio_inicio_secundaria, anio_fin_secundaria, establecimiento_secundaria, titulo_secundaria, finalizado_secundaria, anio_inicio_diversificado, anio_fin_diversificado, establecimiento_diversificado, titulo_diversificado, finalizado_diversificado, anio_inicio_universitario, anio_fin_universitario, establecimiento_universitario, titulo_universitario, finalizado_universitario) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
-        const valores = [null, empleo, usuario, estado, pathFoto, nacimiento, estadoCiv, direccionRes, direccionNot, tel, naciona, profe, nt, sex, pathAntecedentesPenales, pathAntecedentesPoliciacos, pathDeclaracionJurada, pathAutentica, pathDpi, pathRenas, pathRtu, pathOtros, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null]; // Reemplaza valor1, valor2, valor3 con los valores que deseas insertar
+        const valores = [null, idEmpleo, idUsuario, estado, pathFoto, dob, maritalStatus, residenceAddress, notificationAddress, phoneNumbers, nationality, profession, nit, sex, pathAntecedentesPenales, pathAntecedentesPoliciacos, pathDeclaracionJurada, pathAutentica, pathDpi, pathRenas, pathRtu, pathOtros, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null]; // Reemplaza valor1, valor2, valor3 con los valores que deseas insertar
         const conexion = bd();
         conexion.query(insercion, valores, (error, results) => {
             if (error) {
@@ -41,18 +48,19 @@ exports.crearSolicitud = async (req, res) => {
         
             // Verificar si se insertó correctamente
             if (results.affectedRows > 0) {
+                const userData = usernameGlobal.getUserGlobal();
                 // Si se insertó al menos una fila, significa que se insertó correctamente
                 console.log('Inserción exitosa');
-                return res.render('empleo', { alertMessage: 'Creacion de solicitud exitosa'})
+                return res.render('empleo', { data: null, username: userData })
             } else {
                 // Si no se insertó ninguna fila, significa que no se pudo insertar
-                console.log('No se pudo insertar');
-                return res.render('empleo', { alertMessage: 'No se pudo crear usuario'})
+                console.error('Error al insertar en la base de datos:', error);
+                return res.status(500).json({ error: 'Error al insertar en la base de datos' });
             }
         });
     } catch (error) {
         console.error(error)
         // Si hay un error, envía una alerta y permanece en la misma página
-        res.render('login', { alertMessage: 'Error interno del servidor. Inténtalo de nuevo más tarde.' });
+        res.render('empleo', { data: null, alertMessage: 'Error al crear la solicitud' });
     }
-}
+};
