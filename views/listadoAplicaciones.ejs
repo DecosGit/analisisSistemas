@@ -109,14 +109,25 @@
                                 onclick="viewPhoto(this)">Ver Foto</button>
                         </div>
                         <div>
-                            <button class="btn btn-outline-danger">Rechazar</button>
-                            <button class="btn btn-outline-success">Aceptar</button>
+                            <form action="/rechazarCV" method="post">
+                                <input type="hidden" name="data" value="<%= JSON.stringify(elemento) %>">
+                                <button class="btn btn-outline-danger" type="submit">Rechazar</button>
+                            </form>
+                            <form action="/aceptarCV" method="post">
+                                <input type="hidden" name="data" value="<%= JSON.stringify(elemento) %>">
+                                <button class="btn btn-outline-success" data-full="<%= JSON.stringify(elemento) %>"
+                                    onclick="acceptCV(this)">Aceptar</button>
+                            </form>
                         </div>
                     </li>
                     <% }) %>
             </ul>
         </section>
-        <% } %>
+        <% }else { %>
+            <div class="text-danger mx-5 my-5 px-5 py-5">
+                <h2>NO SE ENCONTRARON RESULTADOS...</h2>
+            </div>
+            <% } %> 
 
             <script>
                 // Función para ver la foto

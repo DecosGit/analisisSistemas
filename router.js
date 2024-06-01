@@ -280,4 +280,8 @@ router.post('/uploadRtu', uploadRtu.single('documentRtu'), (req, res) => {
 
 router.post('/crearSolicitud', solicitudController.crearSolicitud)
 
+router.post('/rechazarCV', solicitudController.rechazarCV)
+
+router.post('/aceptarCV', solicitudController.aceptarCV)
+
 module.exports = router;

@@ -2,6 +2,7 @@
 // const mssql = require('mssql');
 const bd = require('../database/conexionSQL')
 const usernameGlobal = require('./userGlobal')
+const bkAppliances = require('./bkAplicantes')
 
 exports.findEmpleos = async (req, res) => {
 
@@ -287,9 +288,9 @@ exports.findCV = async (req, res) => {
 
         let idEmpleo = req.body.empleo
 
-        let queryString = 'SELECT id_empleo, id_usuario, t1.estado, path_foto, telefonos, profesion, t2.nombre, apellido, correo_electronico, ' +
+        let queryString = 'SELECT t1.id, id_empleo, id_usuario, t1.estado, path_foto, telefonos, profesion, t2.nombre, apellido, correo_electronico, ' +
         ' t3.nombre as nombreEmpleo, sueldo, descripcion, fecha_vencimiento, dpi as cui FROM ' +
-        ' (SELECT id_empleo, id_usuario, estado, path_foto, telefonos, profesion FROM `solicitud` WHERE id_empleo = ? ) as t1 ' +
+        ' (SELECT id, id_empleo, id_usuario, estado, path_foto, telefonos, profesion FROM `solicitud` WHERE id_empleo = ? and estado = 1) as t1 ' +
         ' Join (Select id, nombre, apellido, correo_electronico, dpi from `usuarios`) as t2 on  t1.id_usuario = t2.id ' +
         ' Join ( Select id, nombre, sueldo, descripcion, fecha_vencimiento from `empleos` ) as t3 on t1.id_empleo = t3.id' 
 
@@ -303,10 +304,11 @@ exports.findCV = async (req, res) => {
                 }
                 if (results.length > 0) {
                     // Si se encontraron datos, renderizar el dashboard con los datos del usuario
+                    bkAppliances.setApplications(results)
                     return res.render('listadoAplicaciones', { data: results, username: userData });
                 } else {
                     // Si no se encontraron datos, renderizar la página de login con un mensaje de error
-                    return res.render('listadoAplicaciones', { data: null, alertMessage: 'No hay aplicaciones actualmente' });
+                    return res.render('listadoAplicaciones', { data: null, username: userData, alertMessage: 'No hay aplicaciones actualmente' });
                 }
             })
 
