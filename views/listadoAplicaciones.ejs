@@ -10,6 +10,21 @@
 
     <!-- Enlace a Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <style>
+        li {
+            display: flex;
+            justify-content: space-between;
+            gap: 3rem;
+            border: 1px solid steelblue;
+            border-radius: 8px;
+            padding: 2em 1em;
+        }
+        .botones-propios {
+            display: flex;
+            gap: 1rem;
+        }
+    </style>
 </head>
 
 <body>
@@ -80,35 +95,35 @@
                 <% data.forEach((elemento)=> { %>
                     <li>
                         <div>
-                            <span>Nombre: </span>
-                            <span>
+                            <span class="fw-bold">Nombre: </span>
+                            <span >
                                 <%= elemento.nombre %>
                             </span>
                         </div>
                         <div>
-                            <span>Apellido: </span>
+                            <span class="fw-bold">Apellido: </span>
                             <span>
                                 <%= elemento.apellido %>
                             </span>
                         </div>
                         <div>
-                            <span>Telefono: </span>
+                            <span class="fw-bold">Telefono: </span>
                             <span>
                                 <%= elemento.telefonos %>
                             </span>
                         </div>
                         <div>
-                            <span>Profesion: </span>
+                            <span class="fw-bold">Profesion: </span>
                             <span>
                                 <%= elemento.profesion %>
                             </span>
                         </div>
                         <div>
-                            <span>Foto: </span>
+                            <span class="fw-bold">Foto: </span>
                             <button type="button" class="btn btn-secondary mt-2" data-cui="<%= elemento.cui %>"
                                 onclick="viewPhoto(this)">Ver Foto</button>
                         </div>
-                        <div>
+                        <div class="botones-propios">
                             <form action="/rechazarCV" method="post">
                                 <input type="hidden" name="data" value="<%= JSON.stringify(elemento) %>">
                                 <button class="btn btn-outline-danger" type="submit">Rechazar</button>
